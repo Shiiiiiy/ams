@@ -1,0 +1,2280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<excels>
+	<rules>
+		<rule name="userRule" class="com.uws.user.controller.UserRule" />
+		<rule name="demoRule" class="com.uws.demo.controller.DemoRule" />
+		<rule name="newStudentRule" class="com.uws.orientation.controller.StudentRule" />
+		<rule name="stuApproveRule" class="com.uws.reward.controller.StudentApproveRule" />
+		<rule name="claApproveRule" class="com.uws.reward.controller.ClassApproveRule" />
+		<rule name="punishRule" class="com.uws.reward.controller.PunishRule" />
+		<rule name="collegeAwardRule" class="com.uws.reward.controller.CollegeAwardRule" />
+		<rule name="burseRule" class="com.uws.reward.controller.BurseRule" />
+		<rule name="inspireRule" class="com.uws.reward.controller.InspireBurseRule" />
+		<rule name="approveRule" class="com.uws.reward.controller.ApproveRule" />
+		<rule name="employmentRule" class="com.uws.job.controller.EmploymentRule" />
+		<!-- 参军列表导入 -->
+		<rule name="studentArmyRule" class="com.uws.integrate.controller.StudentArmyRule" />
+		<!-- 生源地助学贷款导入 -->
+		<rule name="originLoanRule" class="com.uws.sponsor.controller.OriginLoanRule" />
+		<!-- 就业协议书编号导入 -->
+		<rule name="agreementRule" class="com.uws.job.controller.AgreementRule" />
+		<!-- 报到证编号导入 -->
+		<rule name="registerRule" class="com.uws.job.controller.RegisterRule" />
+		<!-- 招聘会情况导入 -->
+		<rule name="recruitRule" class="com.uws.job.controller.RecruitRule" />
+		<!-- 临时工导入验证 -->
+		<rule name="temporaryWorkRule" class="com.uws.sponsor.controller.TemporaryWorkRule" />
+		<rule name="employmentSchemeRule" class="com.uws.job.controller.EmploymentSchemeRule" />
+		<!-- 活动参与人员列表导入 -->
+		<rule name="activityMemberRule" class="com.uws.activity.controller.ActivityMemberRule" />
+		<!-- 企业信息库导入 -->
+		<rule name="companyInfoRule" class="com.uws.job.controller.CompanyInfoRule"></rule>
+		<!-- 校优导入 -->
+		<rule name="schoolGoodStudentRule" class="com.uws.job.controller.SchoolGoodStudentRule"></rule>
+		<!-- 团务团员列表导入 -->
+		<rule name="leagueMemberRule" class="com.uws.league.controller.LeagueMemberRule" />
+		<!-- 预警导入公用Rule -->
+		<rule name="warningImportRule" class="com.uws.warning.controller.WarningImportRule" />
+		<!-- 党团关系导入RULE -->
+		<rule name="caucusImportRule" class="com.uws.leave.controller.CaucusRule" />
+		<!-- 离校管理Rule -->
+		<rule name="lifeRule" class="com.uws.leave.controller.LifeRule" />
+		<!-- 公寓管理-宿舍楼Rule -->
+		<rule name="buildingRule" class="com.uws.dorm.controller.BuildingRule" />
+	</rules>
+	<imports>
+		<!-- import 属性说明: id:唯一标识 sheet:excel sheet数 table:hibernate po beginRow:excel中从第几行开始读取数据 
+			columnCount:最大列数 rowCount:支持上传数据的最大行数 column 属性说明: site：excel列 name：excel对应列名 
+			must：不是必选字段， must="true" 则表示必填 table_column：数据库字段名,与PO字段一致 value：自定义值，可以写规则的name，需要实现operation方法，主要是自定义值 
+			type:数据类型，string,number,date(日期格式),email format：格式化规则（java实现类，实现format方法）和type 
+			为number 类型的格式化 length:长度限制 only：不是必选字段， only="true" 表示检查上传数据是否有重复的， rule：自定义规则（java实现类 
+			，实现validate方法）校验规则 -->
+
+		<import id="user" sheet="0" beginRow="2" columnCount="13"
+			rowCount="1000">
+
+			<column site="${symbol_pound}1" name="gender" table_column="genderDic"
+				value="@userRule" />
+			<column site="${symbol_pound}2" name="certType" table_column="certTypeDic"
+				value="@userRule" />
+			<column site="${symbol_pound}3" name="status" table_column="statusDic"
+				value="@userRule" />
+			<column site="${symbol_pound}4" name="deleteStatus"
+				table_column="deleteStatus" value="temp.deleteStatus" />
+			<column site="${symbol_pound}5" name="userType" table_column="userType"
+				value="@userRule" />
+
+			<column site="A" name="人员名称" type="string" must="true" only="false"
+				length="30" table_column="name" rule="userRule" />
+			<column site="B" name="性别" type="string" must="true" length="20"
+				table_column="genderText" rule="userRule" />
+			<column site="C" name="用户类型" type="string" must="true" length="10"
+				table_column="userTypeText" rule="userRule" />
+			<column site="D" name="证件类型" type="string" format="userRule"
+				must="false" length="10" table_column="certTypeText" rule="userRule" />
+			<column site="E" name="证件号码" type="string" must="false"
+				length="20" table_column="certNum" />
+			<column site="F" name="手机号码" type="string" must="false"
+				length="11" table_column="phone" />
+			<column site="G" name="固定电话" type="string" must="false"
+				length="20" table_column="tel" />
+			<column site="H" name="电子邮件" type="email" must="false" length="50"
+				table_column="email" />
+			<column site="I" name="家庭地址" type="string" must="false"
+				length="100" table_column="address" />
+			<column site="J" name="邮编" type="string" must="false" length="10"
+				table_column="postcode" />
+			<column site="K" name="人员状态" type="string" must="true" length="10"
+				table_column="statusText" rule="userRule" />
+			<column site="L" name="备注 " type="string" must="false" length="500"
+				table_column="comments" />
+			<column site="M" name="登录名" type="string" must="true" only="true"
+				length="30" table_column="loginName" rule="userRule" />
+			<column site="N" name="编号" type="string" must="true" only="true"
+				length="32" table_column="id" />
+
+		</import>
+
+		<!--导入新生报到信息 -->
+		<import id="importReport" sheet="0" beginRow="2" columnCount="16"
+			rowCount="1000">
+
+			<column site="#1" name="genderDic" table_column="genderDic"
+				value="@newStudentRule" />
+
+			<column site="#2" name="greenReason" table_column="greenReason"
+				value="@newStudentRule" />
+
+			<column site="#3" name="reportSiteDic" table_column="reportSiteDic"
+				value="@newStudentRule" />
+
+			<column site="#4" name="enterYearDic" table_column="enterYearDic"
+				value="@newStudentRule" />
+
+
+			<column site="A" name="报到状态" type="string" must="true" length="30"
+				table_column="status" />
+
+			<column site="B" name="学院" type="string" must="false" length="50"
+				table_column="college" />
+			<column site="C" name="专业" type="string" must="false" length="50"
+				table_column="major" />
+			<column site="D" name="班级" type="string" must="false" length="50"
+				table_column="className" />
+			<column site="E" name="宿舍" type="string" must="false" length="50"
+				table_column="dormName" />
+			<column site="F" name="学号" type="string" must="true" length="20"
+				table_column="stuNumber" />
+			<column site="G" name="姓名" type="string" must="false" length="50"
+				table_column="name" />
+
+			<column site="H" name="英文名" type="string" must="false" length="50"
+				table_column="englishName" />
+			<column site="I" name="性别" type="string" must="false" length="20"
+				table_column="genderText" rule="newStudentRule" />
+
+
+			<column site="J" name="证件号码" type="string" must="false"
+				length="20" table_column="certificateCode" />
+			<column site="K" name="绿色通道" type="string" must="false"
+				length="50" table_column="greenWay" />
+			<column site="L" name="绿色通道原因" type="string" must="false"
+				length="100" table_column="greenReasonText" rule="newStudentRule" />
+
+			<column site="M" name="撤销原因" type="string" must="false"
+				length="100" table_column="cancelReason" />
+			<column site="N" name="入学年份" type="string" must="false"
+				length="100" table_column="enterYearText" />
+			<column site="O" name="报到时间" type="date" must="false" format="yyyy-MM-dd"
+				length="100" table_column="reportDate" />
+			<column site="P" name="报到地点" type="string" must="false"
+				length="100" table_column="reportSiteText" rule="newStudentRule" />
+
+		</import>
+
+		<!-- 临时勤工助学导入 lizj -->
+		<import id="importTemporaryWorkStudy" sheet="0" beginRow="2"
+			columnCount="9" rowCount="1000">
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="sortId" />
+			<!--<column site="B" name="协议号" type="string" must="false" length="32" 
+				table_column="protocalNo"/> -->
+			<column site="B" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="C" name="学号" type="string" must="true" length="20"
+				table_column="stuNo" rule="temporaryWorkRule" />
+			<column site="D" name="班级" type="string" must="false" length="32"
+				table_column="className" />
+			<column site="E" name="二级学院" type="string" must="false"
+				length="32" table_column="collegeName" />
+			<column site="F" name="月用工时数（小时）" type="number" must="true"
+				length="5" format="0.0" table_column="workHour" />
+			<column site="G" name="开户行" type="string" must="true" length="100"
+				table_column="bank" />
+			<column site="H" name="银行卡号" type="string" must="true" length="20"
+				table_column="cardNum" />
+			<column site="I" name="该生在本月勤工助学中的表现" type="string" must="false"
+				length="200" table_column="workPerformance" />
+		</import>
+
+		<!-- 惩罚管理 学生处分信息导入 -->
+		<import id="importPunish" sheet="0" beginRow="2" columnCount="10"
+			rowCount="5000">
+			<column site="#1" name="stuIdStr" table_column="stuIdStr"
+				value="@punishRule" />
+			<column site="#2" name="punish" table_column="punish" value="@punishRule" />
+			<column site="#3" name="punishYear" table_column="punishYear"
+				value="@punishRule" />
+			<column site="#4" name="punishTerm" table_column="punishTerm"
+				value="@punishRule" />
+
+			<column site="A" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="true" length="32"
+				table_column="stuIdStr" rule="punishRule" />
+			<column site="C" name="处分文号" type="string" length="32"
+				table_column="punishNum" />
+			<column site="D" name="处分名称" type="string" must="true" length="32"
+				table_column="punishStr" rule="punishRule" />
+			<column site="E" name="处分生效日期" type="date" format="yyyy-MM-dd"
+				length="30" table_column="punishStartDate" />
+			<column site="F" name="处分失效日期" type="date" format="yyyy-MM-dd"
+				length="30" table_column="punishEndDate" />
+			<column site="G" name="学年" type="string" must="true" length="32"
+				table_column="punishYearStr" rule="punishRule" />
+			<column site="H" name="学期" type="string" must="true" length="32"
+				table_column="punishTermStr" rule="punishRule" />
+			<column site="I" name="处分原因" type="string" must="true" length="500"
+				table_column="punishReason" />
+			<column site="J" name="备注" type="string" must="false" length="32"
+				table_column="comments" />
+		</import>
+
+		<!-- 校内奖励导入 -->
+		<import id="importCollegeAward" sheet="0" beginRow="2"
+			columnCount="10" rowCount="5000">
+			<column site="#1" name="studentIdStr" table_column="studentIdStr"
+				value="@collegeAwardRule" />
+			<column site="#2" name="schoolYear" table_column="schoolYear"
+				value="@collegeAwardRule" />
+			<column site="#3" name="schoolTerm" table_column="schoolTerm"
+				value="@collegeAwardRule" />
+
+			<column site="A" name="学年" type="string" must="true" length="32"
+				table_column="schoolYearStr" rule="collegeAwardRule" />
+			<column site="B" name="学期" type="string" must="true" length="32"
+				table_column="schoolTermStr" rule="collegeAwardRule" />
+			<column site="C" name="学号" type="string" must="true" length="32"
+				table_column="studentIdStr" rule="collegeAwardRule" />
+			<column site="D" name="获奖名称" type="string" must="true" length="32"
+				table_column="awardName" />
+			<column site="E" name="备注" type="string" must="true" length="500"
+				table_column="comments" />
+		</import>
+
+		<!-- 行为预警导入 -->
+		<import id="importWarningBehavior" sheet="0" beginRow="2"
+			columnCount="10" rowCount="5000">
+			<column site="#1" name="studentStr" table_column="studentStr"
+				value="@warningImportRule" />
+
+			<column site="A" name="序号" type="string" length="32"
+				table_column="strNum" />
+			<column site="B" name="日期" type="date" format="yyyy-MM-dd"
+				length="30" table_column="warningDate" />
+			<column site="C" name="时间" type="string" length="32"
+				table_column="warningTime" />
+			<column site="D" name="姓名" type="string" length="32"
+				table_column="" />
+			<column site="E" name="学号" type="string" must="true" length="32"
+				table_column="studentStr" rule="warningImportRule" />
+			<column site="F" name="位置" type="string" length="100"
+				table_column="warningLocation" />
+			<column site="G" name="班级" type="string" length="100"
+				table_column="" />
+			<column site="H" name="事件描述" type="string" length="100"
+				table_column="warningInfo" />
+			<column site="I" name="备注" type="string" length="500"
+				table_column="comments" />
+		</import>
+
+		<!-- 学生水电费导入 -->
+		<import id="importLifeInfo" sheet="0" beginRow="2" columnCount="10"
+			rowCount="5000">
+			<column site="#1" name="status" table_column="status" value="@lifeRule" />
+
+			<column site="A" name="学号" type="string" length="32"
+				table_column="stuNumber" rule="lifeRule" />
+			<column site="B" name="学生姓名" type="string" length="50"
+				table_column="stuName" />
+			<column site="C" name="欠费情况" type="string" length="32"
+				table_column="statusText" rule="lifeRule" />
+		</import>
+
+		<!-- 国家奖助 国家奖学金导入 -->
+		<import id="importCountryBurse" sheet="0" beginRow="2"
+			columnCount="5" rowCount="1000">
+			<column site="#1" name="stuNum" table_column="stuNum" value="@burseRule" />
+			<column site="#2" name="burseName" table_column="burseName"
+				value="@burseRule" />
+			<column site="#3" name="schoolYear" table_column="schoolYear"
+				value="@burseRule" />
+
+			<column site="A" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="true" length="32"
+				table_column="stuNum" rule="burseRule" />
+			<column site="C" name="学年" type="string" must="true" length="32"
+				table_column="schoolYearStr" rule="burseRule" />
+			<column site="D" name="奖助类型" type="string" must="true" length="32"
+				table_column="burseNameStr" rule="burseRule" />
+			<column site="E" name="备注" type="string" must="false" length="500"
+				table_column="comments" />
+		</import>
+		<!-- 励志奖学金 -->
+		<import id="importInspireBurse" sheet="0" beginRow="2"
+			columnCount="5" rowCount="1000">
+			<column site="#1" name="stuNum" table_column="stuNum" value="@inspireRule" />
+			<column site="#2" name="burseName" table_column="burseName"
+				value="@inspireRule" />
+			<column site="#3" name="schoolYear" table_column="schoolYear"
+				value="@inspireRule" />
+
+			<column site="A" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="true" length="32"
+				table_column="stuNum" rule="inspireRule" />
+			<column site="C" name="学年" type="string" must="true" length="32"
+				table_column="schoolYearStr" rule="inspireRule" />
+			<column site="D" name="奖助类型" type="string" must="true" length="32"
+				table_column="burseNameStr" rule="inspireRule" />
+			<column site="E" name="备注" type="string" must="false" length="500"
+				table_column="comments" />
+		</import>
+
+		<!-- 国家奖助 助学金导入 -->
+		<import id="importHelpBurse" sheet="0" beginRow="2"
+			columnCount="5" rowCount="1000">
+			<column site="#1" name="stuNum" table_column="stuNum" value="@burseRule" />
+			<column site="#2" name="schoolYear" table_column="schoolYear"
+				value="@burseRule" />
+			<column site="#3" name="helpGrade" table_column="helpGrade"
+				value="@burseRule" />
+
+			<column site="A" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="true" length="32"
+				table_column="stuNum" rule="burseRule" />
+			<column site="C" name="学年" type="string" must="true" length="32"
+				table_column="schoolYearStr" rule="burseRule" />
+			<column site="D" name="资助档次" type="string" must="true" length="32"
+				table_column="helpGradeStr" rule="burseRule" />
+			<column site="E" name="备注" type="string" must="false" length="500"
+				table_column="comments" />
+		</import>
+
+		<!-- 评奖评优 学生处导入学生 -->
+		<import id="importStudentApprove" sheet="0" beginRow="2"
+			columnCount="11" rowCount="1000">
+			<column site="#1" name="studentIdStr" table_column="studentIdStr"
+				value="@stuApproveRule" />
+			<column site="#2" name="misMatchThing" table_column="misMatchThing"
+				value="@stuApproveRule" />
+			<column site="#3" name="specialReason" table_column="specialReason"
+				value="@stuApproveRule" />
+			<column site="#4" name="personalPerformance" table_column="personalPerformance"
+				value="@stuApproveRule" />
+			<column site="#5" name="applyReason" table_column="applyReason"
+				value="@stuApproveRule" />
+			<column site="#6" name="mainEvent" table_column="mainEvent"
+				value="@stuApproveRule" />
+
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="serialNum" />
+			<column site="B" name="学院" type="string" must="false" length="32"
+				table_column="academyIdStr" />
+			<column site="C" name="学号" type="string" must="true" length="32"
+				table_column="studentIdStr" rule="stuApproveRule" />
+			<column site="D" name="班级" type="string" must="false" length="32"
+				table_column="classIdStr" />
+			<column site="E" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="F" name="奖项名称" type="string" must="true" length="32"
+				table_column="awardTypeIdStr" />
+			<column site="G" name="奖项编码" type="string" must="true" length="32"
+				table_column="awardTypeCode" rule="stuApproveRule" />
+			<column site="H" name="不符合要求事项" type="string" must="false"
+				length="500" table_column="misMatchThing" rule="stuApproveRule" />
+			<column site="I" name="特别加分理由" type="string" must="false"
+				length="500" table_column="specialReason" rule="stuApproveRule" />
+			<column site="J" name="个人学年表现" type="string" must="false"
+				length="500" table_column="personalPerformance" rule="stuApproveRule" />
+			<column site="K" name="申报理由" type="string" must="false"
+				length="500" table_column="applyReason" rule="stuApproveRule" />
+			<column site="L" name="主要事迹" type="string" must="false"
+				length="500" table_column="mainEvent" rule="stuApproveRule" />
+		</import>
+		<!-- 评奖评优 学生处导入班级 -->
+		<import id="importClassApprove" sheet="0" beginRow="2"
+			columnCount="5" rowCount="1000">
+			<column site="#1" name="classId" table_column="classId"
+				value="@claApproveRule" />
+			<column site="#2" name="classIdStr" table_column="classIdStr"
+				value="@claApproveRule" />
+			<!-- <column site="#5" name="teacherIdStr" table_column="teacherIdStr" 
+				value="@claApproveRule"/> -->
+			<column site="#3" name="classAwardInfo" table_column="classAwardInfo"
+				value="@claApproveRule" />
+			<column site="#4" name="mainResult" table_column="mainResult"
+				value="@claApproveRule" />
+
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="serialNum" />
+			<column site="B" name="学院" type="string" must="false" length="32"
+				table_column="academyIdStr" />
+			<column site="C" name="班级名称" type="string" must="true" length="32"
+				table_column="classIdName" />
+			<column site="D" name="班号" type="string" must="true" length="32"
+				table_column="classIdStr" rule="claApproveRule" />
+			<column site="E" name="奖项编码" type="string" must="true" length="32"
+				table_column="awardTypeCode" rule="claApproveRule" />
+			<column site="F" name="班级获奖情况" type="string" must="true"
+				length="500" table_column="classAwardInfo" rule="claApproveRule" />
+			<column site="G" name="主要成绩" type="string" must="true" length="500"
+				table_column="mainResult" rule="claApproveRule" />
+		</import>
+
+
+		<!--心理预警信息导入开始 -->
+		<import id="importPsychologyInfo" sheet="0" beginRow="2"
+			columnCount="17" rowCount="1000">
+			<column site="#1" name="onlyChild" table_column="onlyChild"
+				value="@warningImportRule" />
+			<column site="#2" name="childFoster" table_column="childFoster"
+				value="@warningImportRule" />
+			<column site="#3" name="psychologyAssessment" table_column="psychologyAssessment"
+				value="@warningImportRule" />
+			<column site="#4" name="problemAssessment" table_column="problemAssessment"
+				value="@warningImportRule" />
+			<column site="#5" name="isHospitalMedication" table_column="isHospitalMedication"
+				value="@warningImportRule" />
+			<column site="#6" name="dangerAssessment" table_column="dangerAssessment"
+				value="@warningImportRule" />
+			<column site="#7" name="collegeOpinion" table_column="collegeOpinion"
+				value="@warningImportRule" />
+			<column site="#8" name="psychologyOpinion" table_column="psychologyOpinion"
+				value="@warningImportRule" />
+
+			<column site="A" name="序号" type="string" must="false" length="5"
+				table_column="number" />
+			<column site="B" name="姓名" type="string" must="false" length="30"
+				table_column="stuName" />
+			<column site="C" name="性别" type="string" must="false" length="30"
+				table_column="genderDic" />
+			<column site="D" name="学院" type="string" must="false" length="30"
+				table_column="majorName" />
+			<column site="E" name="年级" type="string" must="false" length="30"
+				table_column="grade" />
+			<column site="F" name="专业" type="string" must="false" length="30"
+				table_column="className" />
+			<column site="G" name="班级" type="string" must="false" length="30"
+				table_column="examNumber" />
+			<column site="H" name="学号" type="string" must="true" only="true"
+				length="50" table_column="stuNumber" rule="warningImportRule" />
+			<column site="I" name="独生子女" type="string" must="true" length="32"
+				table_column="onlyChildText" rule="warningImportRule" />
+			<column site="J" name="童年寄养经历" type="string" must="true"
+				length="32" table_column="childFosterText" rule="warningImportRule" />
+			<column site="K" name="心理问题类型评估" type="string" must="true"
+				length="32" table_column="psychologyAssessmentText" rule="warningImportRule" />
+			<column site="L" name="问题程度评估" type="string" must="true"
+				length="32" table_column="problemAssessmentText" rule="warningImportRule" />
+			<column site="M" name="是否因心理疾病住院或服药" type="string" must="true"
+				length="32" table_column="isHospitalMedicationText" rule="warningImportRule" />
+			<column site="N" name="危险行为评估" type="string" must="true"
+				length="32" table_column="dangerAssessmentText" rule="warningImportRule" />
+			<column site="O" name="学院关注意见" type="string" must="true"
+				length="32" table_column="collegeOpinionText" rule="warningImportRule" />
+			<column site="P" name="心理中心关注意见" type="string" must="true"
+				length="32" table_column="psychologyOpinionText" rule="warningImportRule" />
+			<column site="Q" name="备注" type="string" must="false" length="1000"
+				table_column="comments" />
+		</import>
+		<!-- 心理预警信息导入结束 -->
+
+
+		<!-- 导入学生参军信息开始 -->
+		<import id="importStudentArmy" sheet="0" beginRow="2"
+			columnCount="19" rowCount="1000">
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="indexs" />
+			<column site="B" name="姓名" type="string" must="false" length="32"
+				table_column="name" />
+			<column site="C" name="性别" type="string" must="false" length="50"
+				table_column="gender" />
+			<column site="D" name="身份证号" type="string" must="true" only="true"
+				length="20" table_column="certificateCode" rule="studentArmyRule" />
+			<column site="E" name="最后学历(专/本/研)" type="string" must="false"
+				length="20" table_column="degrees" />
+			<column site="F" name="学制" type="string" must="false" length="20"
+				table_column="schoolYear" />
+			<column site="G" name="专业" type="string" must="false" length="30"
+				table_column="major" />
+			<column site="H" name="学生类别" type="string" must="false"
+				length="20" table_column="stuCategory" />
+			<column site="I" name="入学时间" type="string" must="false"
+				length="10" table_column="entranceDate" />
+			<column site="J" name="毕业时间" type="string" must="false"
+				length="10" table_column="graduationDate" />
+			<column site="K" name="参军时间" type="string" must="true" length="10"
+				table_column="armyDate" />
+			<column site="L" name="应缴学费" type="number" must="false"
+				format="0.00" length="12" table_column="tuitionFees" />
+			<column site="M" name="实缴学费" type="number" must="false"
+				format="0.00" length="12" table_column="paidFees" />
+			<column site="N" name="获贷金额" type="number" must="false"
+				format="0.00" length="12" table_column="loanAmount" />
+			<column site="O" name="学费补偿金额" type="number" must="false"
+				format="0.00" length="12" table_column="compensationAmount" />
+			<column site="P" name="贷款代偿金额小计" type="number" must="false"
+				format="0.00" length="12" table_column="loanCount" />
+			<column site="Q" name="贷款代偿金额本金" type="number" must="false"
+				format="0.00" length="12" table_column="loanPrincipal" />
+			<column site="R" name="退役复学学费资助金额" type="number" must="false"
+				format="0.00" length="12" table_column="supportFees" />
+			<column site="S" name="备注" type="string" must="false" length="100"
+				table_column="remark" />
+		</import>
+		<!-- 导入学生参军信息结束 -->
+
+		<!--导入生源地助学贷款开始 -->
+		<import id="importOriginLoan" sheet="0" beginRow="2"
+			columnCount="12" rowCount="1000">
+			<column site="#1" name="loanYear" table_column="loanYear"
+				value="@originLoanRule" />
+
+			<column site="A" name="学生姓名" type="string" must="true" length="32"
+				table_column="stuName" />
+			<column site="B" name="身份证号" type="string" must="false"
+				length="40" table_column="certificateCode" />
+			<column site="C" name="贷款学年" type="string" must="true" length="40"
+				table_column="loanYearText" />
+			<column site="D" name="贷款银行" type="string" must="true" length="50"
+				table_column="loanBank" />
+			<column site="E" name="贷款次数" type="number" must="true" format="0"
+				length="32" table_column="countLoan" />
+			<column site="F" name="入学年份" type="string" must="false"
+				length="32" table_column="enterYear" />
+			<column site="G" name="毕业日期" type="date" must="false" format="yyyy-MM-dd"
+				length="50" table_column="graduationDate" />
+			<column site="H" name="院系" type="string" must="false" length="20"
+				table_column="college" />
+			<column site="I" name="专业" type="string" must="false" length="32"
+				table_column="major" />
+			<column site="J" name="学号" type="string" must="true" length="20"
+				table_column="stuNumber" rule="originLoanRule" />
+			<column site="K" name="合同金额" type="number" must="true" format="0.00"
+				length="20" table_column="contractAmount" />
+			<column site="L" name="欠缴费用总额" type="number" must="false"
+				format="0.00" length="50" table_column="paymentAmount" />
+		</import>
+		<!-- 导入生源地助学贷款结束 -->
+		<!-- 导入就业方案开始 -->
+		<import id="importEmploymentScheme" sheet="0" beginRow="2"
+			columnCount="66" rowCount="5000">
+			<column site="#1" name="isFileSchoolValue" table_column="isFileSchool"
+				value="@employmentSchemeRule" />
+			<column site="#2" name="isAccountSchoolValue" table_column="isAccountSchool"
+				value="@employmentSchemeRule" />
+			<column site="#3" name="graduateCodeValue" table_column="graduateCode"
+				value="@employmentSchemeRule" />
+			<column site="A" name="考生号" type="string" length="50"
+				table_column="examNo" />
+			<column site="B" name="身份证号" type="string" length="50"
+				table_column="stuCode" />
+			<column site="C" name="姓名" type="string" length="50"
+				table_column="stuName" />
+			<column site="D" name="性别代码" type="string" length="10"
+				table_column="sexCode" />
+			<column site="E" name="民族代码" type="string" length="10"
+				table_column="nationCode" />
+			<column site="F" name="政治面貌" type="string" length="50"
+				table_column="political" />
+			<column site="G" name="院校代码" type="string" length="50"
+				table_column="schoolCode" />
+			<column site="H" name="院校名称" type="string" length="100"
+				table_column="schoolName" />
+			<column site="I" name="分校名称" type="string" length="100"
+				table_column="brachSchoolName" />
+			<column site="J" name="院校所在省代码" type="string" length="50"
+				table_column="schoolPrivince" />
+			<column site="K" name="学历代码" type="string" length="50"
+				table_column="educationCode" />
+			<column site="L" name="专业代码" type="string" length="50"
+				table_column="majorCode" />
+			<column site="M" name="专业" type="string" length="50"
+				table_column="majorName" />
+			<column site="N" name="专业方向" type="string" length="50"
+				table_column="majorSide" />
+			<column site="O" name="培养方式代码" type="string" length="50"
+				table_column="trainTypeCode" />
+			<column site="P" name="生源所在地代码" type="string" length="50"
+				table_column="placeCode" />
+			<column site="Q" name="生源所在地" type="string" length="100"
+				table_column="sourcePlace" />
+			<column site="R" name="城乡生源" type="string" length="50"
+				table_column="cityVillage" />
+			<column site="S" name="学制" type="string" length="10"
+				table_column="graduatePlan" />
+			<column site="T" name="入学时间" type="string" length="20"
+				table_column="enterDate" />
+			<column site="U" name="毕业时间" type="string" length="20"
+				table_column="strGraduateTime" />
+			<column site="V" name="师范生类别代码" type="string" length="50"
+				table_column="teachStudentTypeCode" />
+			<column site="W" name="困难生类别代码" type="string" length="50"
+				table_column="difficultTypeCode" />
+			<column site="X" name="所在院系" type="string" length="50"
+				table_column="collegeName" />
+			<column site="Y" name="所在班级" type="string" length="50"
+				table_column="className" />
+			<column site="Z" name="学号" type="string" length="50" must="true"
+				table_column="stuNo" rule="employmentSchemeRule" />
+			<column site="AA" name="出生日期" type="string" length="20"
+				table_column="birthday" />
+			<column site="AB" name="定向或委培单位" type="string" length="100"
+				table_column="trainCompany" />
+			<column site="AC" name="手机号码" type="string" length="20"
+				table_column="phone" />
+			<column site="AD" name="电子邮箱" type="string" length="100"
+				table_column="email" />
+			<column site="AE" name="QQ号码" type="string" length="20"
+				table_column="qq" />
+			<column site="AF" name="家庭地址" type="string" length="500"
+				table_column="address" />
+			<column site="AG" name="家庭电话" type="string" length="20"
+				table_column="telephone" />
+			<column site="AH" name="家庭邮编" type="string" length="20"
+				table_column="addressPost" />
+			<column site="AI" name="入学前档案所在单位" type="string" length="100"
+				table_column="beforeFileCompany" />
+			<column site="AJ" name="档案是否转入学校" type="string" length="10"
+				table_column="isFileSchoolText" rule="employmentSchemeRule" />
+			<column site="AK" name="入学前户口所在地派出所" type="string" length="100"
+				table_column="beforeAccountPolice" />
+			<column site="AL" name="户口是否转入学校" type="string" length="20"
+				table_column="isAccountSchoolText" rule="employmentSchemeRule" />
+			<column site="AM" name="毕业去向代码" type="string" length="100"
+				table_column="graduateCodeText" rule="employmentSchemeRule" />
+			<column site="AN" name="单位名称" type="string" length="100"
+				table_column="companyName" />
+			<column site="AO" name="单位组织机构代码" type="string" length="50"
+				table_column="companyOrgCode" />
+			<column site="AP" name="单位性质代码" type="string" length="50"
+				table_column="companyCode" />
+			<column site="AQ" name="单位行业代码" type="string" length="50"
+				table_column="companyIndustryCode" />
+			<column site="AR" name="单位所在地代码" type="string" length="50"
+				table_column="companyPlaceCode" />
+			<column site="AS" name="单位所在地" type="string" length="500"
+				table_column="companyPlace" />
+			<column site="AT" name="工作职位类别代码" type="string" length="50"
+				table_column="workTypeCode" />
+			<column site="AU" name="单位联系人" type="string" length="50"
+				table_column="companyPerson" />
+			<column site="AV" name="联系人电话" type="string" length="50"
+				table_column="personTelephone" />
+			<column site="AW" name="联系人手机" type="string" length="50"
+				table_column="personPhone" />
+			<column site="AX" name="联系人电子邮箱" type="string" length="100"
+				table_column="personEmail" />
+			<column site="AY" name="联系人传真" type="string" length="50"
+				table_column="personFax" />
+			<column site="AZ" name="单位地址" type="string" length="500"
+				table_column="companyAddress" />
+			<column site="BA" name="单位邮编" type="string" length="50"
+				table_column="compantPost" />
+			<column site="BB" name="报到证签发类别代码" type="string" length="50"
+				table_column="reportTypeCode" />
+			<column site="BC" name="报到证签往单位名称" type="string" length="100"
+				table_column="reportCompanyName" />
+			<column site="BD" name="签往单位所在地代码" type="string" length="50"
+				table_column="reportCompanyPlaceCode" />
+			<column site="BE" name="签往单位所在地" type="string" length="100"
+				table_column="reportCompnayPlace" />
+			<column site="BF" name="档案转寄单位名称" type="string" length="100"
+				table_column="fileCompanyName" />
+			<column site="BG" name="档案转寄单位地址" type="string" length="500"
+				table_column="fileCompanyAddress" />
+			<column site="BH" name="档案转寄单位邮编" type="string" length="50"
+				table_column="fileCompanyPost" />
+			<column site="BI" name="户口迁移地址" type="string" length="500"
+				table_column="accountAddress" />
+			<column site="BJ" name="报到证编号" type="string" length="50"
+				table_column="reportNo" />
+			<column site="BK" name="报到起始时间" type="string" length="20"
+				table_column="strReportStart" />
+			<column site="BL" name="就业备注1" type="string" length="500"
+				table_column="jobCommentOne" />
+			<column site="BM" name="就业备注2" type="string" length="500"
+				table_column="jobCommentTwo" />
+			<column site="BN" name="就业备注3" type="string" length="500"
+				table_column="jobCommentThree" />
+		</import>
+		<!-- 导入就业方案结束 -->
+
+		<!--导入就业生信息开始 -->
+		<import id="importEmployment" sheet="0" beginRow="2"
+			columnCount="37" rowCount="5000">
+			<column site="#1" name="education" table_column="education"
+				value="@employmentRule" />
+			<column site="#2" name="isWork" table_column="isWork" value="@employmentRule" />
+			<column site="#3" name="normalType" table_column="normalType"
+				value="@employmentRule" />
+			<column site="#4" name="isIndependent" table_column="isIndependent"
+				value="@employmentRule" />
+			<column site="#5" name="cultureType" table_column="cultureType"
+				value="@employmentRule" />
+			<column site="#6" name="recruitStudentType" table_column="recruitStudentType"
+				value="@employmentRule" />
+			<column site="#7" name="difficultType" table_column="difficultType"
+				value="@employmentRule" />
+
+			<column site="A" name="学校名称" type="string" must="false"
+				length="30" table_column="schoolName" />
+			<column site="B" name="院系名称" type="string" must="false"
+				length="30" table_column="collegeName" />
+			<column site="C" name="专业名称" type="string" must="false"
+				length="30" table_column="majorName" />
+			<column site="D" name="专业方向" type="string" must="false"
+				length="30" table_column="majorFrom" />
+			<column site="E" name="所在班级" type="string" must="false"
+				length="30" table_column="className" />
+			<column site="F" name="考生号" type="string" must="false" length="30"
+				table_column="examNumber" />
+			<column site="G" name="学生姓名" type="string" must="false"
+				length="30" table_column="stuName" />
+			<column site="H" name="学号" type="string" must="true" only="true"
+				length="50" table_column="stuNumber" rule="employmentRule" />
+			<column site="I" name="身份证号" type="string" must="false"
+				length="30" table_column="certificateCode" />
+			<column site="J" name="性别" type="string" must="false" length="30"
+				table_column="genderDic" />
+			<column site="K" name="出生日期" type="date" must="false" length="30"
+				format="yyyy-MM-dd" table_column="brithDate" />
+			<column site="L" name="民族" type="string" must="false" length="30"
+				table_column="national" />
+			<column site="M" name="政治面貌" type="string" must="false"
+				length="30" table_column="politicalDic" />
+			<column site="N" name="生源地" type="string" must="false" length="30"
+				table_column="sourceLand" />
+			<column site="O" name="学历" type="string" must="true" length="32"
+				table_column="educationText" rule="employmentRule" />
+			<column site="P" name="学制" type="string" must="false" length="30"
+				table_column="schoolLenth" />
+			<column site="Q" name="师范生类别" type="string" must="true"
+				length="32" table_column="normalTypeText" rule="employmentRule" />
+			<column site="R" name="招生类别" type="string" must="true" length="32"
+				table_column="recruitStudentTypeText" rule="employmentRule" />
+			<column site="S" name="培养方式" type="string" must="true" length="32"
+				table_column="cultureTypeText" rule="employmentRule" />
+			<column site="T" name="困难生类别" type="string" must="true"
+				length="32" table_column="difficultTypeText" rule="employmentRule" />
+			<column site="U" name="入学年月" type="string" must="false"
+				format="yyyy-MM-dd" length="30" table_column="enterTime" />
+			<column site="V" name="毕业年月" type="string" must="false"
+				format="yyyy-MM-dd" length="50" table_column="graduateTime" />
+			<column site="W" name="联系电话" type="string" must="false"
+				length="50" table_column="homeTel" />
+			<column site="X" name="手机号码" type="string" must="false"
+				length="50" table_column="phone1" />
+			<column site="Y" name="QQ号码" type="string" must="false"
+				length="50" table_column="qq" />
+			<column site="Z" name="联系地址" type="string" must="false"
+				length="50" table_column="homeAddress" />
+			<column site="AA" name="电子邮箱" type="string" must="false"
+				length="50" table_column="email" />
+			<column site="AB" name="邮编" type="string" must="false" length="50"
+				table_column="homePostCode" />
+		</import>
+		<!-- 导入就业生信息结束 -->
+
+
+
+		<!-- 导入就业协议书编号 -->
+		<import id="importAgreementCode" sheet="0" beginRow="2"
+			columnCount="4" rowCount="5000">
+			<column site="#1" name="employmentYear" table_column="employmentYear"
+				value="@agreementRule" />
+
+			<column site="A" name="姓名" type="string" must="true" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="true" only="true"
+				length="20" table_column="stuNumber" rule="agreementRule" />
+			<column site="C" name="学年" type="string" must="true" length="32"
+				table_column="employmentYearText" rule="agreementRule" />
+			<column site="D" name="就业协议书编号" type="string" must="true"
+				only="true" length="32" table_column="agreementCode" rule="agreementRule" />
+		</import>
+		<!-- 导入就业协议书编号 -->
+
+		<!-- 导入报到证编号 -->
+		<import id="importRegisterCode" sheet="0" beginRow="2"
+			columnCount="4" rowCount="5000">
+			<column site="#1" name="employmentYear" table_column="employmentYear"
+				value="@registerRule" />
+
+			<column site="A" name="姓名" type="string" must="true" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="true" only="true"
+				length="20" table_column="stuNumber" rule="registerRule" />
+			<column site="C" name="学年" type="string" must="true" length="32"
+				table_column="employmentYearText" rule="registerRule" />
+			<column site="D" name="报到证编号" type="string" must="true" only="true"
+				length="32" table_column="registerCode" rule="registerRule" />
+		</import>
+		<!-- 导入报到证编号 -->
+
+		<!-- 综合测评明细分数导入 start -->
+		<import id="importEvaluationDetail" sheet="0" beginRow="2"
+			columnCount="11" rowCount="1000">
+			<column site="A" name="学年" type="string" must="false" length="20"
+				table_column="yearId" />
+			<column site="B" name="学期" type="string" must="false" length="50"
+				table_column="termId" />
+			<column site="C" name="测评月份" type="string" must="false"
+				length="30" table_column="monthId" />
+			<column site="D" name="学院" type="string" must="false" length="32"
+				table_column="college" />
+			<column site="E" name="专业" type="string" must="false" length="32"
+				table_column="major" />
+			<column site="F" name="班级" type="string" must="false" length="40"
+				table_column="classId" />
+			<column site="G" name="学生" type="string" must="false" length="40"
+				table_column="studentName" />
+			<column site="H" name="学号" type="string" must="false" length="50"
+				table_column="studentNo" />
+			<column site="I" name="测评类别" type="string" must="false"
+				length="50" table_column="typeId" />
+			<column site="J" name="事由" type="string" must="false" length="50"
+				table_column="reason" />
+			<column site="K" name="分数" type="string" must="true" length="50"
+				table_column="score" />
+		</import>
+		<!-- 综合测评明细分数导入 end -->
+
+		<!-- 综合测评旧数据导入 start -->
+		<import id="importEvaluation" sheet="0" beginRow="2"
+			columnCount="8" rowCount="1000">
+			<column site="A" name="学号" type="string" must="false" length="20"
+				table_column="studentNo" />
+			<column site="B" name="姓名" type="string" must="false" length="50"
+				table_column="studentName" />
+			<column site="C" name="年份" type="string" must="false" length="32"
+				table_column="yearId" />
+			<column site="D" name="学期" type="string" must="false" length="32"
+				table_column="termId" />
+			<column site="E" name="测评月份" type="string" must="false"
+				length="32" table_column="monthId" />
+			<column site="F" name="类型" type="string" must="false" length="40"
+				table_column="typeId" />
+			<column site="G" name="说明" type="string" must="false" length="400"
+				table_column="reason" />
+			<column site="H" name="分数" type="string" must="false" length="50"
+				table_column="scoreSum" />
+		</import>
+		<!-- 综合测评旧数据导入 end -->
+
+		<!-- 团员名单导入 start -->
+		<import id="importLeagueMember" sheet="0" beginRow="2"
+			columnCount="8" rowCount="1000">
+			<column site="#1" name="memberTypeValue" table_column="memberType"
+				value="@leagueMemberRule" />
+
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="index" />
+			<column site="B" name="学号" type="string" only="true" must="true"
+				length="50" table_column="stuNumberText" />
+			<column site="C" name="姓名" type="string" must="false" length="50"
+				table_column="name" />
+			<column site="D" name="性别" type="string" must="false" length="50"
+				table_column="genderText" />
+			<column site="E" name="籍贯" type="string" must="false" length="32"
+				table_column="nativeText" />
+			<column site="F" name="出生年月" type="date" must="false" length="30"
+				format="yyyy-MM-dd" table_column="brithDate" />
+			<column site="G" name="政治面貌" type="string" must="true" length="32"
+				table_column="memberTypeText" rule="leagueMemberRule" />
+			<column site="H" name="入团时间" type="date" must="true" length="30"
+				format="yyyy-MM-dd" table_column="joinTime" />
+			<column site="I" name="入党时间" type="date" must="false" length="30"
+				format="yyyy-MM-dd" table_column="partyTime" />
+		</import>
+		<!-- 团员名单导入 end -->
+		<!-- 导入参加活动学生信息开始 2015.10.15 wangjr -->
+		<import id="importActivityMember" sheet="0" beginRow="2"
+			columnCount="9" rowCount="1000">
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="indexs" />
+			<column site="B" name="姓名" type="string" must="false" length="32"
+				table_column="name" />
+			<column site="C" name="学号" type="string" must="true" only="true"
+				length="20" table_column="stuNumber" rule="activityMemberRule" />
+			<column site="D" name="性别" type="string" must="false" length="10"
+				table_column="gender" />
+			<column site="E" name="学院" type="string" must="false" length="32"
+				table_column="college" />
+			<column site="F" name="专业" type="string" must="false" length="32"
+				table_column="major" />
+			<column site="G" name="班级" type="string" must="false" length="40"
+				table_column="classId" />
+			<column site="H" name="联系方式" type="string" must="false" only="true"
+				length="13" table_column="phone" />
+			<!--<column site="I" name="备注" type="string" must="false" length="100" 
+				table_column="comments"/> -->
+		</import>
+		<!-- 导入参加活动学生信息开始结束 -->
+		<!-- 企业信息导入开始 -->
+		<import id="importCompanyInfo" sheet="0" beginRow="2"
+			columnCount="13" rowCount="5000">
+			<column site="#1" name="companyProertyValue" table_column="companyProerty"
+				value="@companyInfoRule" />
+			<column site="#2" name="isSchoolCompanyProtocolValue"
+				table_column="isSchoolCompanyProtocol" value="@companyInfoRule" />
+			<column site="#3" name="isBatchWorkValue" table_column="isBatchWork"
+				value="@companyInfoRule" />
+			<column site="A" name="序号" type="string" length="50"
+				table_column="index" />
+			<column site="B" name="所属学院" type="string" must="false"
+				length="32" table_column="collegeText" />
+			<column site="C" name="企业名称" type="string" must="true" length="100"
+				table_column="companyName" />
+			<column site="D" name="企业性质" type="string" must="true" length="100"
+				table_column="companyProertyText" rule="companyInfoRule" />
+			<column site="E" name="企业详细地址" type="string" must="true"
+				length="200" table_column="address" />
+			<column site="F" name="联系人" type="string" must="true" length="50"
+				table_column="contactPerson" />
+			<column site="G" name="职务" type="string" must="false" length="50"
+				table_column="contactPost" />
+			<column site="H" name="联系电话" type="string" must="false"
+				length="20" table_column="contactPhone" rule="companyInfoRule" />
+			<column site="I" name="手机号码" type="string" must="false"
+				length="20" table_column="phoneNum" rule="companyInfoRule" />
+			<column site="J" name="需求岗位" type="string" must="false"
+				length="200" table_column="needWork" />
+			<column site="K" name="是否签订校企合作协议" type="string" must="true"
+				length="32" table_column="isSchoolCompanyProtocolText" rule="companyInfoRule" />
+			<column site="L" name="是否批量就业单位" type="string" must="true"
+				length="32" table_column="isBatchWorkText" rule="companyInfoRule" />
+			<column site="M" name="更新时间" type="string" length="10" must="true"
+				table_column="updateDateText" />
+		</import>
+		<!-- 企业信息导入结束 -->
+		<!-- 校优秀毕业生导入开始 -->
+		<import id="importSchoolGoodStudent" sheet="0" beginRow="2"
+			columnCount="12" rowCount="5000">
+
+			<column site="A" name="二级学院" type="string" must="false"
+				length="50" table_column="collegeName" />
+			<column site="B" name="专业" type="string" must="false" length="50"
+				table_column="majorName" />
+			<column site="C" name="班级" type="string" must="false" length="50"
+				table_column="className" />
+			<column site="D" name="学号" type="string" must="true" length="20"
+				table_column="stuId" rule="schoolGoodStudentRule" />
+			<column site="E" name="姓名" type="string" must="false" length="20"
+				table_column="stuName" />
+			<column site="F" name="性别" type="string" must="false" length="5"
+				table_column="sex" />
+			<column site="G" name="政治面貌" type="string" must="false"
+				length="50" table_column="political" />
+			<column site="H" name="职务" type="string" must="true" length="50"
+				table_column="post" />
+			<column site="I" name="总成绩平均分" type="number" format="0.00"
+				must="true" length="10" table_column="avgScore" />
+			<column site="J" name="班级排名" type="number" must="true" format="0"
+				length="10" table_column="classSort" />
+			<column site="K" name="计算机等级" type="string" must="true"
+				length="32" table_column="computerLevel" />
+			<column site="L" name="外语等级" type="string" must="true" length="32"
+				table_column="englishLevel" />
+		</import>
+		<!-- 校优秀毕业生导入结束 -->
+		<!-- 社员名单导入 start -->
+		<import id="importAssociationMember" sheet="0" beginRow="2"
+			columnCount="9" rowCount="1000">
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="index" />
+			<column site="B" name="学号" type="string" only="true" must="true"
+				length="50" table_column="stuNumberText" />
+			<column site="C" name="姓名" type="string" must="false" length="50"
+				table_column="name" />
+			<column site="D" name="性别" type="string" must="false" length="50"
+				table_column="genderText" />
+			<column site="E" name="学院" type="string" must="false" length="32"
+				table_column="college" />
+			<column site="F" name="专业" type="string" must="false" length="30"
+				table_column="major" />
+			<column site="G" name="班级" type="string" must="false" length="30"
+				table_column="classId" />
+			<column site="H" name="联系方式" type="string" must="false"
+				length="32" table_column="phone1" />
+		</import>
+		<!-- 社员名单导入 end -->
+
+		<!-- 学业预警导入 -->
+		<import id="importStudyWarning" sheet="0" beginRow="2"
+			columnCount="4" rowCount="1000">
+			<column site="A" name="学院" type="string" length="32"
+				table_column="collegeName" />
+			<column site="B" name="姓名" type="string" length="32"
+				table_column="studentName" />
+			<column site="C" name="学号" type="string" must="true" length="20"
+				table_column="studentNumber" rule="warningImportRule" />
+			<column site="D" name="学籍预警" type="string" must="true" length="32"
+				table_column="studyWarning" />
+		</import>
+
+		<!-- 党团关系导入 -->
+		<import id="importCaucusData" sheet="0" beginRow="2"
+			columnCount="4" rowCount="5000">
+
+			<column site="#1" name="handleStatusValue" table_column="handleStatus"
+				value="@caucusImportRule" />
+			<column site="#2" name="yearValue" table_column="yearDic"
+				value="@caucusImportRule" />
+
+			<column site="A" name="序号" type="string" length="32"
+				table_column="seq" />
+			<column site="B" name="学年" type="string" length="32" must="true"
+				table_column="year" rule="caucusImportRule" />
+			<column site="C" name="介绍信号码" type="string" length="50"
+				table_column="IntroductionLetterCode" />
+			<column site="D" name="姓名" type="string" length="50"
+				table_column="stuName" />
+			<column site="E" name="学号" type="string" length="32" only="true"
+				must="true" table_column="studentNumber" rule="caucusImportRule" />
+			<column site="F" name="学生/教工" type="string" length="50"
+				table_column="caucusKind" />
+			<column site="G" name="所属学院" type="string" length="20"
+				table_column="college" />
+			<column site="H" name="所属支部" type="string" length="50"
+				table_column="branchName" />
+			<column site="I" name="正式/预备" type="string" length="50"
+				table_column="caucusType" />
+			<column site="J" name="性别" type="string" length="10"
+				table_column="gender" />
+			<column site="K" name="年龄" type="string" length="20"
+				table_column="age" />
+			<column site="L" name="民族" type="string" length="32"
+				table_column="nation" />
+			<column site="M" name="身份证号" type="string" length="18"
+				table_column="idNumber" />
+			<column site="N" name="党费交至日期" type="string" length="50"
+				table_column="partyFeeDateStr" />
+			<column site="O" name="接收党组织详细名称" type="string" length="50"
+				table_column="acceptedBranchName" />
+			<column site="P" name="转出时间" type="string" length="50"
+				table_column="transferDateStr" />
+			<column site="Q" name="联系电话" type="string" length="30"
+				table_column="contactPhone" />
+			<column site="R" name="回执情况" type="string" length="50"
+				table_column="receipt" />
+			<column site="S" name="办理完成" type="string" length="20" must="true"
+				table_column="handleStatusStr" rule="caucusImportRule" />
+			<column site="T" name="备注" type="string" length="100"
+				table_column="comments" />
+		</import>
+		<!--文明宿舍导入 start -->
+		<import id="importGoodDormList" sheet="0" beginRow="2"
+			columnCount="2" rowCount="1000">
+			<column site="A" name="宿舍楼" type="string" length="32"
+				table_column="buildingName" />
+			<column site="B" name="宿舍编号" type="string" length="32"
+				table_column="name" must="false" />
+		</import>
+		<!--较差宿舍导入 start -->
+		<import id="importBadDormList" sheet="0" beginRow="2"
+			columnCount="2" rowCount="1000">
+			<column site="#1" name="buildingValue" table_column="building"
+				value="@buildingRule" />
+			<column site="A" name="宿舍楼" type="string" length="32"
+				table_column="buildingName" value="buildingRule" />
+			<column site="B" name="宿舍编号" type="string" length="32"
+				table_column="name" must="false" />
+		</import>
+		<!--违规违纪导入 start -->
+		<import id="importIndisciplineList" sheet="0" beginRow="2"
+			columnCount="9" rowCount="1000">
+		</import>
+	</imports>
+
+	<exports>
+		<!-- 属性说明 site：excel列 name：excel对应列名 table_column：数据库字段名 type:数据类型，string,number,date(日期格式), 
+			format：与type 配对进行数据格式化: type=date format属性 按时日期格式化 yyyy-MM-dd HH:mm:ss type=number 
+			format属性 可设置小数格式(0.00);可设置百分比格式(0.00%);可设置千分位格式(${symbol_pound},${symbol_pound}${symbol_pound}0.00) 
+			type=money format属性 可设置为货币格式(￥${symbol_pound},${symbol_pound}${symbol_pound}0.00) -->
+		<export id="exportuser" sheet="0" beginRow="1" rowCount="25000">
+			<column site="A" name="人员名称" type="string" table_column="name" />
+			<column site="B" name="组织机构" type="string" table_column="orgName" />
+			<column site="C" name="岗位" type="string" table_column="positionName" />
+			<column site="D" name="性别" type="string" table_column="gender" />
+			<column site="E" name="用户类型" type="string" table_column="userType" />
+			<column site="F" name="证件类型" type="string" table_column="certType" />
+			<column site="G" name="证件号码" type="string" table_column="certNum" />
+			<column site="H" name="手机号码" type="string" table_column="phone" />
+			<column site="I" name="固定电话" type="string" table_column="tel" />
+			<column site="J" name="电子邮件" type="string" table_column="email" />
+			<column site="K" name="家庭地址" type="string" table_column="address" />
+			<column site="L" name="邮编" type="string" table_column="postcode" />
+			<column site="M" name="人员状态" type="string" table_column="status" />
+			<column site="N" name="备注 " type="string" table_column="comments" />
+			<column site="O" name="创建时间 " type="date" format="yyyy-MM-dd"
+				table_column="createTime" />
+		</export>
+
+		<!-- 学生信息导出 -->
+		<export id="studentInfoExport" sheet="0" beginRow="1" rowCount="25000">
+			<column site="A" name="序号" type="string" table_column="indexs" />
+			<column site="B" name="报到状态" type="string" table_column="status" />
+			<column site="C" name="学院" type="string" table_column="college" />
+			<column site="D" name="专业" type="string" table_column="major" />
+			<column site="E" name="班级" type="string" table_column="className" />
+			<column site="F" name="宿舍" type="string" table_column="dormName" />
+			<column site="G" name="学号" type="string" table_column="stuNumber" />
+			<column site="H" name="姓名" type="string" table_column="name" />
+			<column site="I" name="姓名汉语拼音" type="string" table_column="namePy" />
+
+			<column site="J" name="英文名" type="string" table_column="englishName" />
+			<column site="K" name="曾用名" type="string" table_column="oldName" />
+			<column site="L" name="性别" type="string" table_column="sex" />
+			<column site="M" name="出生日期" type="string" table_column="birthDate" />
+
+			<column site="N" name="证件号码" type="string" table_column="cerCode" />
+			<column site="O" name="政治面貌" type="string" table_column="political" />
+			<column site="P" name="民族" type="string" table_column="nation" />
+			<column site="Q" name="毕业学校" type="string" table_column="graduation" />
+			<column site="R" name="录取总分" type="string" table_column="enterScore" />
+			<column site="S" name="生源地" type="string" table_column="sorceLand" />
+			<column site="T" name="籍贯" type="string" table_column="native" />
+			<column site="U" name="户口类别" type="string" table_column="addressType" />
+
+			<column site="V" name="户口地址" type="string" table_column="nativeAddress" />
+			<column site="W" name="家庭地址" type="string" table_column="homeAddress" />
+			<column site="X" name="家庭邮政编码" type="string" table_column="homePostCode" />
+			<column site="Y" name="家庭电话" type="string" table_column="homeTel" />
+			<column site="Z" name="手机号码1" type="string" table_column="phone1" />
+			<column site="AA" name="手机号码2" type="string" table_column="phone2" />
+
+			<column site="AB" name="电子邮箱" type="string" table_column="email" />
+			<column site="AC" name="QQ" type="string" table_column="QQ" />
+			<column site="AD" name="网络地址" type="string" table_column="url" />
+			<column site="AE" name="婚姻状况" type="string" table_column="marriage" />
+			<column site="AF" name="港澳台侨" type="string" table_column="overChinese" />
+			<column site="AG" name="宗教信仰" type="string" table_column="religion" />
+			<column site="AH" name="健康状况" type="string" table_column="health" />
+			<column site="AI" name="血型" type="string" table_column="bloodType" />
+			<column site="AJ" name="银行卡号" type="string" table_column="bankCode" />
+			<column site="AK" name="入党申请" type="string" table_column="partyApp" />
+			<column site="AL" name="党校学习" type="string" table_column="partyStudy" />
+			<column site="AM" name="缴费状况" type="string" table_column="costState" />
+			<column site="AN" name="绿色通道" type="string" table_column="greenWay" />
+			<column site="AO" name="绿色通道原因" type="string" table_column="greenReason" />
+
+			<column site="AP" name="撤销原因" type="string" table_column="cancelReason" />
+			<column site="AQ" name="入学年份" type="string" table_column="enterYear" />
+			<column site="AR" name="报到时间" type="string" table_column="reportDate" />
+			<column site="AS" name="报到地点" type="string" table_column="reportSite" />
+			<column site="AT" name="新生采集状态" type="string" table_column="collectState" />
+
+			<column site="AU" name="父亲姓名" type="string" table_column="fatherName" />
+			<column site="AV" name="父亲手机号码" type="string" table_column="fatherPhone" />
+			<column site="AW" name="父亲邮箱" type="string" table_column="fatherEmail" />
+			<column site="AX" name="父亲住址" type="string" table_column="fatherAddress" />
+			<column site="AY" name="父亲邮编" type="string" table_column="fatherPostCode" />
+			<column site="AZ" name="父亲工作单位" type="string" table_column="fatherWorkUnit" />
+
+			<column site="BA" name="母亲姓名" type="string" table_column="motherName" />
+			<column site="BB" name="母亲手机号码" type="string" table_column="motherPhone" />
+			<column site="BC" name="母亲邮箱" type="string" table_column="motherEmail" />
+			<column site="BD" name="母亲住址" type="string" table_column="motherAddress" />
+			<column site="BE" name="母亲邮编" type="string" table_column="motherPostCode" />
+			<column site="BF" name="母亲工作单位" type="string" table_column="motherWorkUnit" />
+
+			<column site="BG" name="监护人姓名" type="string" table_column="guardianName" />
+			<column site="BH" name="监护人手机号码" type="string" table_column="guardianPhone" />
+			<column site="BI" name="监护人邮箱" type="string" table_column="guardianEmail" />
+			<column site="BJ" name="监护人住址" type="string" table_column="guardianAddress" />
+			<column site="BK" name="监护人邮编" type="string" table_column="guardianPostCode" />
+			<column site="BL" name="监护人工作单位" type="string" table_column="guardianWorkUnit" />
+		</export>
+
+		<export id="exportDifficultStudent" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="学院认定困难等级" type="string" table_column="difficultLevel" />
+			<column site="B" name="姓名" type="string" table_column="name" />
+			<column site="C" name="性别" type="string" table_column="genderDic" />
+			<column site="D" name="学号" type="string" table_column="stuNumber" />
+			<column site="E" name="二级学院" type="string" table_column="collegeName" />
+			<column site="F" name="班级" type="string" table_column="className" />
+			<column site="G" name="身份证号" type="string" table_column="certificateCode" />
+			<column site="H" name="家长电话" type="string" table_column="homeTel" />
+			<column site="I" name="学生电话" type="string" table_column="phone1" />
+			<column site="J" name="QQ号" type="string" table_column="qq" />
+			<column site="K" name="村级证明" type="string" table_column="villageProve" />
+			<column site="L" name="镇级证明" type="string" table_column="townProve" />
+			<column site="M" name="县级证明" type="string" table_column="countyProve" />
+			<column site="N" name="助学贷款" type="string" table_column="isStudentLoan" />
+			<column site="O" name="低保证 " type="string" table_column="lowAssuranceLevel" />
+			<column site="P" name="救助证 " type="string" table_column="aidCertificateLevel" />
+			<column site="Q" name="残疾证类型" type="string" table_column="disabilityCertificateKind" />
+			<column site="R" name="残疾证级别" type="string"
+				table_column="disabilityCertificateLevel" />
+			<column site="S" name="申请理由" type="string" table_column="applyReason" />
+		</export>
+
+
+		<export id="exportProvinceGoodStudent" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="二级学院" type="string" table_column="collegeName" />
+			<column site="B" name="专业" type="string" table_column="majorName" />
+			<column site="C" name="班级" type="string" table_column="className" />
+			<column site="D" name="姓名" type="string" table_column="name" />
+			<column site="E" name="性别" type="string" table_column="gender" />
+			<column site="F" name="政治面貌" type="string" table_column="politicalDic" />
+			<column site="G" name="职务" type="string" table_column="post" />
+			<column site="H" name="学历" type="string" table_column="studentType" />
+			<column site="I" name="生源地" type="string" table_column="sourceLand" />
+			<column site="J" name="身份证号码" type="string" table_column="certificateCode" />
+		</export>
+
+
+		<export id="exportPoorStudent" sheet="0" beginRow="1" rowCount="25000">
+			<column site="A" name="姓名" type="string" table_column="name" />
+			<column site="B" name="学号" type="string" table_column="stuNumber" />
+			<column site="C" name="学年" type="string" table_column="schoolYear" />
+			<column site="D" name="学院" type="string" table_column="collegeName" />
+			<column site="E" name="专业" type="string" table_column="majorName" />
+			<column site="F" name="班级" type="string" table_column="className" />
+			<column site="G" name="困难类别" type="string" table_column="difficultType" />
+			<column site="H" name="困难原因" type="string" table_column="reason" />
+			<column site="I" name="推荐档次" type="string" table_column="diffLevel" />
+		</export>
+
+
+		<!-- 预期 报到统计导出开始 -->
+		<export id="exportCountExReportVo" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="时间段" type="string" table_column="timeLine" />
+			<column site="B" name="新生数/占比" type="string" table_column="freshMan" />
+			<column site="C" name="寝具包/占比" type="string" table_column="bed" />
+			<column site="D" name="迁户口/占比" type="string" table_column="move" />
+			<column site="E" name="随行人数" type="string" table_column="entourage" />
+		</export>
+
+
+		<!-- 预期 报到查询导出开始 -->
+		<export id="exportCountExReportListVo" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="序号" type="string" table_column="indexs" />
+			<column site="B" name="报到状态" type="string" table_column="status" />
+			<column site="C" name="学院" type="string" table_column="college" />
+			<column site="D" name="专业" type="string" table_column="major" />
+			<column site="E" name="班级" type="string" table_column="className" />
+			<column site="F" name="宿舍" type="string" table_column="dormName" />
+			<column site="G" name="学号" type="string" table_column="stuNumber" />
+			<column site="H" name="姓名" type="string" table_column="name" />
+			<column site="I" name="姓名汉语拼音" type="string" table_column="namePy" />
+
+			<column site="J" name="英文名" type="string" table_column="englishName" />
+			<column site="K" name="曾用名" type="string" table_column="oldName" />
+			<column site="L" name="性别" type="string" table_column="sex" />
+			<column site="M" name="出生日期" type="string" table_column="birthDate" />
+
+			<column site="N" name="证件号码" type="string" table_column="cerCode" />
+			<column site="O" name="政治面貌" type="string" table_column="political" />
+			<column site="P" name="民族" type="string" table_column="nation" />
+			<column site="Q" name="毕业学校" type="string" table_column="graduation" />
+			<column site="R" name="录取总分" type="string" table_column="enterScore" />
+			<column site="S" name="生源地" type="string" table_column="sorceLand" />
+			<column site="T" name="籍贯" type="string" table_column="native" />
+			<column site="U" name="户口类别" type="string" table_column="addressType" />
+
+			<column site="V" name="户口地址" type="string" table_column="nativeAddress" />
+			<column site="W" name="家庭地址" type="string" table_column="homeAddress" />
+			<column site="X" name="家庭邮政编码" type="string" table_column="homePostCode" />
+			<column site="Y" name="家庭电话" type="string" table_column="homeTel" />
+			<column site="Z" name="手机号码1" type="string" table_column="phone1" />
+			<column site="AA" name="手机号码2" type="string" table_column="phone2" />
+
+			<column site="AB" name="电子邮箱" type="string" table_column="email" />
+			<column site="AC" name="QQ" type="string" table_column="QQ" />
+			<column site="AD" name="网络地址" type="string" table_column="url" />
+			<column site="AE" name="婚姻状况" type="string" table_column="marriage" />
+			<column site="AF" name="港澳台侨" type="string" table_column="overChinese" />
+			<column site="AG" name="宗教信仰" type="string" table_column="religion" />
+			<column site="AH" name="健康状况" type="string" table_column="health" />
+			<column site="AI" name="血型" type="string" table_column="bloodType" />
+			<column site="AJ" name="银行卡号" type="string" table_column="bankCode" />
+			<column site="AK" name="入党申请" type="string" table_column="partyApp" />
+			<column site="AL" name="党校学习" type="string" table_column="partyStudy" />
+			<column site="AM" name="缴费状况" type="string" table_column="costState" />
+			<column site="AN" name="绿色通道" type="string" table_column="greenWay" />
+			<column site="AO" name="绿色通道原因" type="string" table_column="greenReason" />
+
+			<column site="AP" name="撤销原因" type="string" table_column="cancelReason" />
+			<column site="AQ" name="入学年份" type="string" table_column="enterYear" />
+			<column site="AR" name="报到时间" type="string" table_column="reportDate" />
+			<column site="AS" name="报到地点" type="string" table_column="reportSite" />
+			<column site="AT" name="新生采集状态" type="string" table_column="collectState" />
+
+			<column site="AU" name="父亲姓名" type="string" table_column="fatherName" />
+			<column site="AV" name="父亲手机号码" type="string" table_column="fatherPhone" />
+			<column site="AW" name="父亲邮箱" type="string" table_column="fatherEmail" />
+			<column site="AX" name="父亲住址" type="string" table_column="fatherAddress" />
+			<column site="AY" name="父亲邮编" type="string" table_column="fatherPostCode" />
+			<column site="AZ" name="父亲工作单位" type="string" table_column="fatherWorkUnit" />
+
+			<column site="BA" name="母亲姓名" type="string" table_column="motherName" />
+			<column site="BB" name="母亲手机号码" type="string" table_column="motherPhone" />
+			<column site="BC" name="母亲邮箱" type="string" table_column="motherEmail" />
+			<column site="BD" name="母亲住址" type="string" table_column="motherAddress" />
+			<column site="BE" name="母亲邮编" type="string" table_column="motherPostCode" />
+			<column site="BF" name="母亲工作单位" type="string" table_column="motherWorkUnit" />
+
+			<column site="BG" name="监护人姓名" type="string" table_column="guardianName" />
+			<column site="BH" name="监护人手机号码" type="string" table_column="guardianPhone" />
+			<column site="BI" name="监护人邮箱" type="string" table_column="guardianEmail" />
+			<column site="BJ" name="监护人住址" type="string" table_column="guardianAddress" />
+			<column site="BK" name="监护人邮编" type="string" table_column="guardianPostCode" />
+			<column site="BL" name="监护人工作单位" type="string" table_column="guardianWorkUnit" />
+
+
+			<column site="BM" name="考生号" type="string" table_column="testNo" />
+			<column site="BN" name="年份" type="string" table_column="yearDic" />
+			<column site="BO" name="不报到原因" type="string" table_column="reason" />
+			<column site="BP" name="预报到时间" type="string" table_column="reportDateStr" />
+			<column site="BQ" name="预计车次" type="string" table_column="trainNumber" />
+			<column site="BR" name="预报到站点" type="string" table_column="siteDic" />
+			<column site="BS" name="乘车方式" type="string" table_column="rideWayDic" />
+			<column site="BT" name="随行人员" type="string" table_column="together" />
+			<column site="BU" name="自备车" type="string" table_column="isCar" />
+			<column site="BV" name="需要空调" type="string" table_column="airCond" />
+			<column site="BW" name="寝具包" type="string" table_column="bed" />
+			<column site="BX" name="是否迁移户口" type="string" table_column="move" />
+
+		</export>
+
+
+
+
+
+
+
+
+
+
+		<!-- 预期 报到统计导出结束 -->
+		<!-- 临时勤工助学导出 lizj 开始 -->
+		<export id="exportTemporaryWork" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="序号" type="string" table_column="sortId" />
+			<!--<column site="B" name="协议号" type="string" must="false" length="32" 
+				table_column="protocalNo"/> -->
+			<column site="B" name="姓名" type="string" table_column="stuName" />
+			<column site="C" name="学号" type="string" table_column="stuNo" />
+			<column site="D" name="二级学院" type="string" table_column="collegeName" />
+			<column site="E" name="班级" type="string" table_column="className" />
+			<column site="F" name="用工部门" type="string" table_column="orgName" />
+			<column site="G" name="月用工时数（小时）" type="number" format="0.0"
+				table_column="workHour" />
+			<column site="H" name="酬金（元）" type="number" format="0.00"
+				table_column="totalSalary" />
+			<column site="I" name="开户行" type="string" table_column="bank" />
+			<column site="J" name="银行卡号" type="string" table_column="cardNum" />
+			<column site="K" name="该生在本月勤工助学中的表现" type="string"
+				table_column="workPerformance" />
+		</export>
+		<export id="exportTemporaryWorkByCond" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="序号" type="string" table_column="sortId" />
+			<!--<column site="B" name="协议号" type="string" must="false" length="32" 
+				table_column="protocalNo"/> -->
+			<column site="B" name="姓名" type="string" table_column="stuName" />
+			<column site="C" name="学号" type="string" table_column="stuNo" />
+			<column site="D" name="班级" type="string" table_column="className" />
+			<column site="E" name="二级学院" type="string" table_column="collegeName" />
+			<column site="F" name="学年" type="string" table_column="schoolYear" />
+			<column site="G" name="学期" type="string" table_column="schoolTerm" />
+			<column site="H" name="月份" type="string" table_column="workMonth" />
+			<column site="I" name="用工部门" type="string" table_column="orgName" />
+			<column site="J" name="月用工时数（小时）" type="number" format="0.0"
+				table_column="workHour" />
+			<column site="K" name="酬金（元）" type="number" format="0.00"
+				table_column="totalSalary" />
+			<column site="L" name="开户行" type="string" table_column="bank" />
+			<column site="M" name="银行卡号" type="string" table_column="cardNum" />
+			<column site="N" name="该生在本月勤工助学中的表现" type="string"
+				table_column="workPerformance" />
+		</export>
+		<!-- 临时勤工助学导出 lizj 结束 -->
+		<!-- 勤工助学用工工时导出 lizj 开始 -->
+		<export id="exportLaborHourByCond" sheet="0" beginRow="1"
+			rowCount="25000">
+			<column site="A" name="序号" type="string" table_column="sortId" />
+			<!--<column site="B" name="协议号" type="string" must="false" length="32" 
+				table_column="protocalNo"/> -->
+			<column site="B" name="姓名" type="string" table_column="stuName" />
+			<column site="C" name="学号" type="string" table_column="stuNo" />
+			<column site="D" name="二级学院" type="string" table_column="collegeName" />
+			<column site="E" name="班级" type="string" table_column="className" />
+			<column site="F" name="用工部门" type="string" table_column="orgName" />
+			<column site="G" name="月用工时数（小时）" type="number" format="0.0"
+				table_column="workHour" />
+			<column site="H" name="酬金（元）" type="number" format="0.00"
+				table_column="totalSalary" />
+			<column site="I" name="开户行" type="string" table_column="bank" />
+			<column site="J" name="银行卡号" type="string" table_column="cardNum" />
+		</export>
+		<export id="exportLaborHour" sheet="0" beginRow="1" rowCount="25000">
+			<column site="A" name="序号" type="string" table_column="sortId" />
+			<!--<column site="B" name="协议号" type="string" must="false" length="32" 
+				table_column="protocalNo"/> -->
+			<column site="B" name="姓名" type="string" table_column="stuName" />
+			<column site="C" name="学号" type="string" table_column="stuNo" />
+			<column site="D" name="班级" type="string" table_column="className" />
+			<column site="E" name="二级学院" type="string" table_column="collegeName" />
+			<column site="F" name="年份" type="string" table_column="schoolYear" />
+			<column site="G" name="月份" type="string" table_column="workMonth" />
+			<column site="H" name="用工部门" type="string" table_column="orgName" />
+			<column site="I" name="月用工时数（小时）" type="number" format="0.0"
+				table_column="workHour" />
+			<column site="J" name="酬金（元）" type="number" format="0.00"
+				table_column="totalSalary" />
+			<column site="K" name="开户行" type="string" table_column="bank" />
+			<column site="L" name="银行卡号" type="string" table_column="cardNum" />
+		</export>
+		<!-- 勤工助学用工工时导出 lizj 结束 -->
+		<!-- 报到进度按学院导出开始 -->
+		<export id="exportReportCollegeVo" sheet="0" beginRow="2"
+			rowCount="25000">
+			<column site="A" name="入学年份" type="string" table_column="year" />
+			<column site="B" name="二级学院" type="string" table_column="college" />
+			<column site="C" name="录取人数" type="string" table_column="reported" />
+			<column site="D" name="报到人数" type="string" table_column="realRegistedNum" />
+			<column site="E" name="学院报到率" type="string" table_column="justRate" />
+			<column site="F" name="浙江(录取)" type="string" table_column="330000" />
+			<column site="G" name="浙江(报到)" type="string" table_column="330000Register" />
+			<column site="H" name="安徽(录取)" type="string" table_column="340000" />
+			<column site="I" name="安徽(报到)" type="string" table_column="340000Register" />
+			<column site="J" name="福建(录取)" type="string" table_column="350000" />
+			<column site="K" name="福建(报到)" type="string" table_column="350000Register" />
+			<column site="L" name="贵州(录取)" type="string" table_column="520000" />
+			<column site="M" name="贵州(报到)" type="string" table_column="520000Register" />
+			<column site="N" name="河南(录取)" type="string" table_column="410000" />
+			<column site="O" name="河南(报到)" type="string" table_column="410000Register" />
+			<column site="P" name="江苏(录取)" type="string" table_column="320000" />
+			<column site="Q" name="江苏(报到)" type="string" table_column="320000Register" />
+			<column site="R" name="江西(录取)" type="string" table_column="360000" />
+			<column site="S" name="江西(报到)" type="string" table_column="360000Register" />
+			<column site="T" name="山西(录取)" type="string" table_column="140000" />
+			<column site="U" name="山西(报到)" type="string" table_column="140000Register" />
+			<column site="V" name="湖北(录取)" type="string" table_column="420000" />
+			<column site="W" name="湖北(报到)" type="string" table_column="420000Register" />
+			<column site="X" name="重庆(录取)" type="string" table_column="500000" />
+			<column site="Y" name="重庆(报到)" type="string" table_column="500000Register" />
+			<column site="Z" name="四川(录取)" type="string" table_column="510000" />
+			<column site="AA" name="四川(报到)" type="string" table_column="510000Register" />
+			<column site="AB" name="广西(录取)" type="string" table_column="450000" />
+			<column site="AC" name="广西(报到)" type="string" table_column="450000Register" />
+			<column site="AD" name="新疆(录取)" type="string" table_column="650000" />
+			<column site="AE" name="新疆(报到)" type="string" table_column="650000Register" />
+			<column site="AF" name="广东(录取)" type="string" table_column="440000" />
+			<column site="AG" name="广东(报到)" type="string" table_column="440000Register" />
+			<column site="AH" name="甘肃(录取)" type="string" table_column="620000" />
+			<column site="AI" name="甘肃(报到)" type="string" table_column="620000Register" />
+			<column site="AJ" name="宁夏(录取)" type="string" table_column="640000" />
+			<column site="AK" name="宁夏(报到)" type="string" table_column="640000Register" />
+			<column site="AL" name="其他省份(录取)" type="string" table_column="null" />
+			<column site="AM" name="其他省份(报到)" type="string" table_column="nullRegister" />
+		</export>
+		<!-- 报到进度导出结束 -->
+
+		<!-- 报到进度按专业导出开始 -->
+		<export id="exportReportMajorVo" sheet="0" beginRow="2"
+			rowCount="25000">
+			<column site="A" name="入学年份" type="string" table_column="year" />
+			<column site="B" name="二级学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="录取人数" type="string" table_column="reported" />
+			<column site="E" name="报到人数" type="string" table_column="realRegistedNum" />
+			<column site="F" name="专业报到率" type="string" table_column="justRate" />
+			<column site="G" name="浙江(录取)" type="string" table_column="330000" />
+			<column site="H" name="浙江(报到)" type="string" table_column="330000Register" />
+			<column site="I" name="安徽(录取)" type="string" table_column="340000" />
+			<column site="J" name="安徽(报到)" type="string" table_column="340000Register" />
+			<column site="K" name="福建(录取)" type="string" table_column="350000" />
+			<column site="L" name="福建(报到)" type="string" table_column="350000Register" />
+			<column site="M" name="贵州(录取)" type="string" table_column="520000" />
+			<column site="N" name="贵州(报到)" type="string" table_column="520000Register" />
+			<column site="O" name="河南(录取)" type="string" table_column="410000" />
+			<column site="P" name="河南(报到)" type="string" table_column="410000Register" />
+			<column site="Q" name="江苏(录取)" type="string" table_column="320000" />
+			<column site="R" name="江苏(报到)" type="string" table_column="320000Register" />
+			<column site="S" name="江西(录取)" type="string" table_column="360000" />
+			<column site="T" name="江西(报到)" type="string" table_column="360000Register" />
+			<column site="U" name="山西(录取)" type="string" table_column="140000" />
+			<column site="V" name="山西(报到)" type="string" table_column="140000Register" />
+			<column site="W" name="湖北(录取)" type="string" table_column="420000" />
+			<column site="X" name="湖北(报到)" type="string" table_column="420000Register" />
+			<column site="Y" name="重庆(录取)" type="string" table_column="500000" />
+			<column site="Z" name="重庆(报到)" type="string" table_column="500000Register" />
+			<column site="AA" name="四川(录取)" type="string" table_column="510000" />
+			<column site="AB" name="四川(报到)" type="string" table_column="510000Register" />
+			<column site="AC" name="广西(录取)" type="string" table_column="450000" />
+			<column site="AD" name="广西(报到)" type="string" table_column="450000Register" />
+			<column site="AE" name="新疆(录取)" type="string" table_column="650000" />
+			<column site="AF" name="新疆(报到)" type="string" table_column="650000Register" />
+			<column site="AG" name="广东(录取)" type="string" table_column="440000" />
+			<column site="AH" name="广东(报到)" type="string" table_column="440000Register" />
+			<column site="AI" name="甘肃(录取)" type="string" table_column="620000" />
+			<column site="AJ" name="甘肃(报到)" type="string" table_column="620000Register" />
+			<column site="AK" name="宁夏(录取)" type="string" table_column="640000" />
+			<column site="AL" name="宁夏(报到)" type="string" table_column="640000Register" />
+			<column site="AM" name="其他省份(录取)" type="string" table_column="null" />
+			<column site="AN" name="其他省份(报到)" type="string" table_column="nullRegister" />
+		</export>
+		<!-- 报到进度导出结束 -->
+
+		<!-- 报到进度按班级导出开始 -->
+		<export id="exportReportClassVo" sheet="0" beginRow="2"
+			rowCount="25000">
+			<column site="A" name="入学年份" type="string" table_column="year" />
+			<column site="B" name="二级学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="班级名称" type="string" table_column="className" />
+			<column site="E" name="录取人数" type="string" table_column="reported" />
+			<column site="F" name="报到人数" type="string" table_column="realRegistedNum" />
+			<column site="G" name="班级报到率" type="string" table_column="justRate" />
+			<column site="H" name="浙江(录取)" type="string" table_column="330000" />
+			<column site="I" name="浙江(报到)" type="string" table_column="330000Register" />
+			<column site="J" name="安徽(录取)" type="string" table_column="340000" />
+			<column site="K" name="安徽(报到)" type="string" table_column="340000Register" />
+			<column site="L" name="福建(录取)" type="string" table_column="350000" />
+			<column site="M" name="福建(报到)" type="string" table_column="350000Register" />
+			<column site="N" name="贵州(录取)" type="string" table_column="520000" />
+			<column site="O" name="贵州(报到)" type="string" table_column="520000Register" />
+			<column site="P" name="河南(录取)" type="string" table_column="410000" />
+			<column site="Q" name="河南(报到)" type="string" table_column="410000Register" />
+			<column site="R" name="江苏(录取)" type="string" table_column="320000" />
+			<column site="S" name="江苏(报到)" type="string" table_column="320000Register" />
+			<column site="T" name="江西(录取)" type="string" table_column="360000" />
+			<column site="U" name="江西(报到)" type="string" table_column="360000Register" />
+			<column site="V" name="山西(录取)" type="string" table_column="140000" />
+			<column site="W" name="山西(报到)" type="string" table_column="140000Register" />
+			<column site="X" name="湖北(录取)" type="string" table_column="420000" />
+			<column site="Y" name="湖北(报到)" type="string" table_column="420000Register" />
+			<column site="Z" name="重庆(录取)" type="string" table_column="500000" />
+			<column site="AA" name="重庆(报到)" type="string" table_column="500000Register" />
+			<column site="AB" name="四川(录取)" type="string" table_column="510000" />
+			<column site="AC" name="四川(报到)" type="string" table_column="510000Register" />
+			<column site="AD" name="广西(录取)" type="string" table_column="450000" />
+			<column site="AE" name="广西(报到)" type="string" table_column="450000Register" />
+			<column site="AF" name="新疆(录取)" type="string" table_column="650000" />
+			<column site="AG" name="新疆(报到)" type="string" table_column="650000Register" />
+			<column site="AH" name="广东(录取)" type="string" table_column="440000" />
+			<column site="AI" name="广东(报到)" type="string" table_column="440000Register" />
+			<column site="AJ" name="甘肃(录取)" type="string" table_column="620000" />
+			<column site="AK" name="甘肃(报到)" type="string" table_column="620000Register" />
+			<column site="AL" name="宁夏(录取)" type="string" table_column="640000" />
+			<column site="AM" name="宁夏(报到)" type="string" table_column="640000Register" />
+			<column site="AN" name="其他省份(录取)" type="string" table_column="null" />
+			<column site="AO" name="其他省份(报到)" type="string" table_column="nullRegister" />
+		</export>
+		<!-- 报到进度导出结束 -->
+
+		<!-- 处分信息导出 -->
+		<export id="exportPunish" sheet="0" beginRow="1" rowCount="5000">
+			<column site="A" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="B" name="学号" type="string" must="false" length="32"
+				table_column="stuId" />
+			<column site="C" name="学年" type="string" must="false" length="32"
+				table_column="punishYear" />
+			<column site="D" name="学期" type="string" must="false" length="32"
+				table_column="punishTerm" />
+			<column site="E" name="处分文号" type="string" must="false"
+				length="32" table_column="punishNum" />
+			<column site="F" name="处分名称" type="string" must="false"
+				length="32" table_column="punish" />
+			<column site="G" name="处分生效日期" type="string" must="false"
+				length="10" table_column="punishStartDate" />
+			<column site="H" name="处分失效日期" type="string" must="false"
+				length="10" table_column="punishEndDate" />
+			<column site="I" name="处分原因" type="string" must="false"
+				length="300" table_column="punishReason" />
+			<column site="J" name="备注" type="string" must="false" length="300"
+				table_column="comments" />
+		</export>
+
+		<!-- 勤工助学学生岗位导出 开始 zhangmx -->
+		<export id="exportWorkStudy" sheet="0" beginRow="2" rowCount="1000">
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="sortId" />
+			<column site="B" name="学年" type="string" must="false" length="32"
+				table_column="schoolYear" />
+			<column site="C" name="学期" type="string" must="false" length="32"
+				table_column="term" />
+			<column site="D" name="二级学院" type="string" must="false"
+				length="32" table_column="collegeName" />
+			<column site="E" name="班级" type="string" must="false" length="32"
+				table_column="className" />
+			<column site="F" name="学号" type="string" must="false" length="20"
+				table_column="stuNumber" />
+			<column site="G" name="姓名" type="string" must="false" length="32"
+				table_column="stuName" />
+			<column site="H" name="用工部门" type="string" must="false"
+				length="50" table_column="workOrg" />
+			<column site="I" name="用工岗位" type="string" must="false"
+				length="50" table_column="workName" />
+			<column site="J" name="岗位状态" type="string" must="false"
+				length="32" table_column="postStatusName" />
+			<column site="K" name="备注" type="string" must="false" length="300"
+				table_column="comments" />
+		</export>
+		<!-- 勤工助学学生岗位导出 结束 zhangmx -->
+		<!-- 导出就业方案开始 -->
+		<export id="exportEmploymentScheme" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="考生号" type="string" table_column="examNo" />
+			<column site="B" name="身份证号" type="string" table_column="stuCode" />
+			<column site="C" name="姓名" type="string" table_column="stuName" />
+			<column site="D" name="性别代码" type="string" table_column="sexCode" />
+			<column site="E" name="民族代码" type="string" table_column="nationCode" />
+			<column site="F" name="政治面貌" type="string" table_column="political" />
+			<column site="G" name="院校代码" type="string" table_column="schoolCode" />
+			<column site="H" name="院校名称" type="string" table_column="schoolName" />
+			<column site="I" name="分校名称" type="string" table_column="brachSchoolName" />
+			<column site="J" name="院校所在省代码" type="string" table_column="schoolPrivince" />
+			<column site="K" name="学历代码" type="string" table_column="educationCode" />
+			<column site="L" name="专业代码" type="string" table_column="majorCode" />
+			<column site="M" name="专业" type="string" table_column="majorName" />
+			<column site="N" name="专业方向" type="string" table_column="majorSide" />
+			<column site="O" name="培养方式代码" type="string" table_column="trainTypeCode" />
+			<column site="P" name="生源所在地代码" type="string" table_column="placeCode" />
+			<column site="Q" name="生源所在地" type="string" table_column="sourcePlace" />
+			<column site="R" name="城乡生源" type="string" table_column="cityVillage" />
+			<column site="S" name="学制" type="string" table_column="graduatePlan" />
+			<column site="T" name="入学时间" type="string" table_column="enterDate" />
+			<column site="U" name="毕业时间" type="string" table_column="strGraduateTime" />
+			<column site="V" name="师范生类别代码" type="string" table_column="teachStudentTypeCode" />
+			<column site="W" name="困难生类别代码" type="string" table_column="difficultTypeCode" />
+			<column site="X" name="所在院系" type="string" table_column="collegeName" />
+			<column site="Y" name="所在班级" type="string" table_column="className" />
+			<column site="Z" name="学号" type="string" table_column="stuNo" />
+			<column site="AA" name="出生日期" type="string" table_column="birthday" />
+			<column site="AB" name="定向或委培单位" type="string" table_column="trainCompany" />
+			<column site="AC" name="手机号码" type="string" table_column="phone" />
+			<column site="AD" name="电子邮箱" type="string" table_column="email" />
+			<column site="AE" name="QQ号码" type="string" table_column="qq" />
+			<column site="AF" name="家庭地址" type="string" table_column="address" />
+			<column site="AG" name="家庭电话" type="string" table_column="telephone" />
+			<column site="AH" name="家庭邮编" type="string" table_column="addressPost" />
+			<column site="AI" name="入学前档案所在单位" type="string" table_column="beforeFileCompany" />
+			<column site="AJ" name="档案是否转入学校" type="string" table_column="isFileSchoolText" />
+			<column site="AK" name="入学前户口所在地派出所" type="string"
+				table_column="beforeAccountPolice" />
+			<column site="AL" name="户口是否转入学校" type="string" table_column="isAccountSchoolText" />
+			<column site="AM" name="毕业去向代码" type="string" table_column="graduateCodeText" />
+			<column site="AN" name="单位名称" type="string" table_column="companyName" />
+			<column site="AO" name="单位组织机构代码" type="string" table_column="companyOrgCode" />
+			<column site="AP" name="单位性质代码" type="string" table_column="companyCode" />
+			<column site="AQ" name="单位行业代码" type="string" table_column="companyIndustryCode" />
+			<column site="AR" name="单位所在地代码" type="string" table_column="companyPlaceCode" />
+			<column site="AS" name="单位所在地" type="string" table_column="companyPlace" />
+			<column site="AT" name="工作职位类别代码" type="string" table_column="workTypeCode" />
+			<column site="AU" name="单位联系人" type="string" table_column="companyPerson" />
+			<column site="AV" name="联系人电话" type="string" table_column="personTelephone" />
+			<column site="AW" name="联系人手机" type="string" table_column="personPhone" />
+			<column site="AX" name="联系人电子邮箱" type="string" table_column="personEmail" />
+			<column site="AY" name="联系人传真" type="string" table_column="personFax" />
+			<column site="AZ" name="单位地址" type="string" table_column="companyAddress" />
+			<column site="BA" name="单位邮编" type="string" table_column="compantPost" />
+			<column site="BB" name="报到证签发类别代码" type="string" table_column="reportTypeCode" />
+			<column site="BC" name="报到证签往单位名称" type="string" table_column="reportCompanyName" />
+			<column site="BD" name="签往单位所在地代码" type="string"
+				table_column="reportCompanyPlaceCode" />
+			<column site="BE" name="签往单位所在地" type="string" table_column="reportCompnayPlace" />
+			<column site="BF" name="档案转寄单位名称" type="string" table_column="fileCompanyName" />
+			<column site="BG" name="档案转寄单位地址" type="string" table_column="fileCompanyAddress" />
+			<column site="BH" name="档案转寄单位邮编" type="string" table_column="fileCompanyPost" />
+			<column site="BI" name="户口迁移地址" type="string" table_column="accountAddress" />
+			<column site="BJ" name="报到证编号" type="string" table_column="reportNo" />
+			<column site="BK" name="报到起始时间" type="string" table_column="strReportStartTime" />
+			<column site="BL" name="就业备注1" type="string" table_column="jobCommentOne" />
+			<column site="BM" name="就业备注2" type="string" table_column="jobCommentTwo" />
+			<column site="BN" name="就业备注3" type="string" table_column="jobCommentThree" />
+		</export>
+		<!-- 导出就业方案结束 -->
+		<!-- 学生信息导出 开始 wjr -->
+		<export id="exportStudentInfo" sheet="0" beginRow="2" rowCount="5000">
+			<column site="A" name="序号" type="string" must="false" length="32"
+				table_column="sortId" />
+			<column site="B" name="学院" type="string" must="false" length="32"
+				table_column="collegeName" />
+			<column site="C" name="专业" type="string" must="false" length="32"
+				table_column="majorName" />
+			<column site="D" name="班级" type="string" must="false" length="32"
+				table_column="className" />
+			<column site="E" name="学号" type="string" must="false" length="20"
+				table_column="stuNumber" />
+			<column site="F" name="姓名" type="string" must="false" length="32"
+				table_column="name" />
+			<column site="G" name="身份证号" type="string" must="false"
+				length="20" table_column="certificateCode" />
+			<column site="H" name="性别" type="string" must="false" length="20"
+				table_column="genderName" />
+			<column site="I" name="民族" type="string" must="false" length="20"
+				table_column="national" />
+			<column site="J" name="学籍状态" type="string" must="false"
+				length="20" table_column="edusStatus" />
+		</export>
+		<!-- 学生信息导出 结束 -->
+
+		<!-- 综合测评统计导出start -->
+		<export id="exportEvaluation" sheet="0" beginRow="2" rowCount="1000">
+			<column site="A" name="学年" type="string" table_column="year" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="班级" type="string" table_column="class" />
+			<column site="E" name="学生" type="string" table_column="student" />
+			<column site="F" name="学年" type="string" table_column="studentNum" />
+			<column site="G" name="德育测评总分" type="string" table_column="moralScoreSum" />
+			<column site="H" name="智育测评总分" type="string" table_column="intellectScoreSum" />
+			<column site="I" name="文体测评总分" type="string" table_column="cultrueScoreSum" />
+			<column site="J" name="能力测评总分" type="string" table_column="capacityScoreSum" />
+			<column site="K" name="测评总分" type="string" table_column="scoreSum" />
+		</export>
+		<!-- 综合测评统计导出end -->
+
+		<!-- 国家助学贷款信息导出start -->
+		<export id="exportNationalLoan" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="贷款学年" type="string" table_column="loanYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="班级" type="string" table_column="class" />
+			<column site="E" name="学号" type="string" table_column="studentNum" />
+			<column site="F" name="姓名" type="string" table_column="name" />
+			<column site="G" name="贷款金额" type="string" table_column="loanAmount" />
+			<column site="H" name="贷款年限" type="string" table_column="loanNumYear" />
+			<column site="I" name="银行卡类型" type="string" table_column="cardType" />
+			<column site="J" name="银行账号" type="string" table_column="cardNum" />
+			<column site="K" name="申请日期" type="string" table_column="applyDate" />
+		</export>
+		<!-- 国家助学贷款信息导出end -->
+		<!-- 学工队伍导出start -->
+		<export id="exportStuJobVo" sheet="0" beginRow="1" rowCount="1000">
+			<column site="A" name="学院" type="string" table_column="college" />
+			<column site="B" name="专业" type="string" table_column="major" />
+			<column site="C" name="班级" type="string" table_column="klass" />
+			<column site="D" name="班主任" type="string" table_column="headMaster" />
+			<column site="E" name="教学辅导员" type="string" table_column="teacherCounsellor" />
+			<column site="F" name="班长" type="string" table_column="monitor" />
+		</export>
+		<!-- 学工队伍导出end -->
+		<!-- 学工队伍导出start -->
+		<export id="exportAduitVo" sheet="0" beginRow="1" rowCount="1000">
+			<column site="A" name="学年" type="string" table_column="schooleYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="优秀（人）" type="string" table_column="excellent" />
+			<column site="D" name="良好（人）" type="string" table_column="well" />
+			<column site="E" name="中等（人）" type="string" table_column="medium" />
+			<column site="F" name="差（人）" type="string" table_column="bad" />
+		</export>
+		<!-- 学工队伍导出end -->
+		<!-- 校优导出start -->
+		<export id="exportSchoolGoodStudent" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="二级学院" type="string" table_column="collegeName" />
+			<column site="B" name="专业" type="string" table_column="majorName" />
+			<column site="C" name="班级" type="string" table_column="className" />
+			<column site="D" name="姓名" type="string" table_column="studentName" />
+			<column site="E" name="性别" type="string" table_column="sex" />
+			<column site="F" name="政治面貌" type="string" table_column="political" />
+			<column site="G" name="职务" type="string" table_column="post" />
+			<column site="H" name="总成绩平均分" type="string" table_column="avgScore" />
+			<column site="I" name="班级排名" type="string" table_column="classSort" />
+			<column site="J" name="计算机等级" type="string" table_column="computerLevel" />
+			<column site="K" name="外语等级" type="string" table_column="englishLevel" />
+			<column site="L" name="状态" type="string" table_column="approveStatus" />
+		</export>
+		<!-- 校优导出end -->
+		<!-- 校优按学院按统计导出start -->
+		<export id="exportSchoolGoodStudentStatByCollege" sheet="0"
+			beginRow="1" rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="二级学院" type="string" table_column="collegeName" />
+			<column site="C" name="优秀毕业生人数" type="string" table_column="passNum" />
+			<column site="D" name="毕业生人数" type="string" table_column="total" />
+			<column site="E" name="优秀率" type="string" table_column="passNumRatio" />
+		</export>
+		<export id="exportSchoolGoodStudentStatByCollegeYear" sheet="0"
+			beginRow="1" rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="二级学院" type="string" table_column="collegeName" />
+			<column site="D" name="优秀毕业生人数" type="string" table_column="passNum" />
+			<column site="E" name="毕业生人数" type="string" table_column="total" />
+			<column site="F" name="优秀率" type="string" table_column="passNumRatio" />
+		</export>
+		<!-- 校优按学院按统计导出end -->
+		<!-- 校优按专业按统计导出start -->
+		<export id="exportSchoolGoodStudentStatByMajor" sheet="0"
+			beginRow="1" rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="二级学院" type="string" table_column="collegeName" />
+			<column site="C" name="专业" type="string" table_column="majorName" />
+			<column site="D" name="优秀毕业生人数" type="string" table_column="passNum" />
+			<column site="E" name="毕业生人数" type="string" table_column="total" />
+			<column site="F" name="优秀率" type="string" table_column="passNumRatio" />
+		</export>
+		<export id="exportSchoolGoodStudentStatByMajorYear" sheet="0"
+			beginRow="1" rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="二级学院" type="string" table_column="collegeName" />
+			<column site="D" name="专业" type="string" table_column="majorName" />
+			<column site="E" name="优秀毕业生人数" type="string" table_column="passNum" />
+			<column site="F" name="毕业生人数" type="string" table_column="total" />
+			<column site="G" name="优秀率" type="string" table_column="passNumRatio" />
+		</export>
+		<!-- 校优按专业按统计导出end -->
+		<!-- 校优按班级按统计导出start -->
+		<export id="exportSchoolGoodStudentStatByClass" sheet="0"
+			beginRow="1" rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="二级学院" type="string" table_column="collegeName" />
+			<column site="C" name="专业" type="string" table_column="majorName" />
+			<column site="D" name="班级" type="string" table_column="className" />
+			<column site="E" name="优秀毕业生人数" type="string" table_column="passNum" />
+			<column site="F" name="毕业生人数" type="string" table_column="total" />
+			<column site="G" name="优秀率" type="string" table_column="passNumRatio" />
+		</export>
+		<export id="exportSchoolGoodStudentStatByClassYear" sheet="0"
+			beginRow="1" rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="二级学院" type="string" table_column="collegeName" />
+			<column site="D" name="专业" type="string" table_column="majorName" />
+			<column site="E" name="班级" type="string" table_column="className" />
+			<column site="F" name="优秀毕业生人数" type="string" table_column="passNum" />
+			<column site="G" name="毕业生人数" type="string" table_column="total" />
+			<column site="H" name="优秀率" type="string" table_column="passNumRatio" />
+		</export>
+		<!-- 校优按专业按统计导出end -->
+
+
+
+		<!-- 双困生按学院统计导出开始 -->
+		<export id="exportPoorStudentByCollege" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="学院" type="string" table_column="collegeName" />
+			<column site="D" name="毕业生总人数" type="string" table_column="graduation_total" />
+			<column site="E" name="双困生总人数" type="string" table_column="approvePassNum" />
+			<column site="F" name="比例" type="string" table_column="proportion" />
+			<column site="G" name="就业困难" type="string" table_column="job" />
+			<column site="H" name="家庭困难" type="string" table_column="family" />
+			<column site="I" name="就业困难和家庭困难" type="string" table_column="job_family" />
+			<column site="J" name="残疾" type="string" table_column="disability" />
+			<column site="K" name="就业困难和残疾" type="string" table_column="job_disability" />
+			<column site="L" name="家庭困难和残疾" type="string" table_column="family_disability" />
+			<column site="M" name="就业困难、家庭困难和残疾" type="string"
+				table_column="job_family_disability" />
+		</export>
+		<!-- 双困生按学院统计导出结束 -->
+
+		<!-- 双困生按专业统计导出开始 -->
+		<export id="exportPoorStudentByMajor" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="学院" type="string" table_column="collegeName" />
+			<column site="D" name="专业" type="string" table_column="majorName" />
+			<column site="E" name="毕业生总人数" type="string" table_column="graduation_total" />
+			<column site="F" name="双困生总人数" type="string" table_column="approvePassNum" />
+			<column site="G" name="比例" type="string" table_column="proportion" />
+			<column site="H" name="就业困难" type="string" table_column="job" />
+			<column site="I" name="家庭困难" type="string" table_column="family" />
+			<column site="J" name="就业困难和家庭困难" type="string" table_column="job_family" />
+			<column site="K" name="残疾" type="string" table_column="disability" />
+			<column site="L" name="就业困难和残疾" type="string" table_column="job_disability" />
+			<column site="M" name="家庭困难和残疾" type="string" table_column="family_disability" />
+			<column site="N" name="就业困难、家庭困难和残疾" type="string"
+				table_column="job_family_disability" />
+		</export>
+		<!-- 双困生按专业统计导出结束 -->
+
+		<!-- 双困生按班级统计导出开始 -->
+		<export id="exportPoorStudentByClass" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="学院" type="string" table_column="collegeName" />
+			<column site="D" name="专业" type="string" table_column="majorName" />
+			<column site="E" name="班级" type="string" table_column="className" />
+			<column site="F" name="毕业生总人数" type="string" table_column="graduation_total" />
+			<column site="G" name="双困生总人数" type="string" table_column="approvePassNum" />
+			<column site="H" name="比例" type="string" table_column="proportion" />
+			<column site="I" name="就业困难" type="string" table_column="job" />
+			<column site="J" name="家庭困难" type="string" table_column="family" />
+			<column site="K" name="就业困难和家庭困难" type="string" table_column="job_family" />
+			<column site="L" name="残疾" type="string" table_column="disability" />
+			<column site="M" name="就业困难和残疾" type="string" table_column="job_disability" />
+			<column site="N" name="家庭困难和残疾" type="string" table_column="family_disability" />
+			<column site="O" name="就业困难、家庭困难和残疾" type="string"
+				table_column="job_family_disability" />
+		</export>
+		<!-- 双困生按班级统计导出结束 -->
+
+		<!-- 综合测评明细导出start -->
+		<export id="exportEvaluationDetail" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="学年" type="string" table_column="year" />
+			<column site="B" name="学期" type="string" table_column="term" />
+			<column site="C" name="测评月份" type="string" table_column="month" />
+			<column site="D" name="学院" type="string" table_column="college" />
+			<column site="E" name="专业" type="string" table_column="major" />
+			<column site="F" name="班级" type="string" table_column="class" />
+			<column site="G" name="学生" type="string" table_column="student" />
+			<column site="H" name="学号" type="string" table_column="studentNo" />
+			<column site="I" name="测评类别" type="string" table_column="type" />
+			<column site="J" name="事由" type="string" table_column="reason" />
+			<column site="K" name="分数" type="string" table_column="score" />
+		</export>
+		<!-- 综合测评明细导出end -->
+		<!-- 学工队伍导出start -->
+		<export id="exportStuJobVo" sheet="0" beginRow="1" rowCount="1000">
+			<column site="A" name="学院" type="string" table_column="college" />
+			<column site="B" name="专业" type="string" table_column="major" />
+			<column site="C" name="班级" type="string" table_column="klass" />
+			<column site="D" name="班主任" type="string" table_column="headMaster" />
+			<column site="E" name="教学辅导员" type="string" table_column="teacherCounsellor" />
+			<column site="F" name="班长" type="string" table_column="monitor" />
+		</export>
+		<!-- 学工队伍导出start -->
+		<!-- 团员名单导出 start -->
+		<export id="exprortLeagueMember" sheet="0" beginRow="4"
+			rowCount="1000">
+			<column site="A" name="序号" type="string" table_column="sortId" />
+			<column site="B" name="姓名" type="string" table_column="name" />
+			<column site="C" name="性别" type="string" table_column="genderName" />
+			<column site="D" name="籍贯" type="string" table_column="nativeName" />
+			<column site="E" name="出生年月" type="string" table_column="birthDateStr" />
+			<column site="F" name="入团时间" type="string" table_column="joinTimeStr" />
+			<column site="G" name="团内外职务" type="string" table_column="leaguePosition" />
+			<column site="H" name="备注" type="string" table_column="comments" />
+		</export>
+		<!-- 团员名单导出 end -->
+		<!-- 团员管理信息导出 start -->
+		<export id="exprortLeagueMemberManage" sheet="0" beginRow="2"
+			rowCount="1000">
+			<column site="A" name="姓名" type="string" table_column="name" />
+			<column site="B" name="身份证号码" type="string" table_column="certificateCode" />
+			<column site="C" name="民族" type="string" table_column="national" />
+			<column site="D" name="政治面貌" type="string" table_column="politicalDic" />
+			<column site="E" name="入党年月" type="string" table_column="partyTimeStr" />
+			<column site="F" name="入团年月" type="string" table_column="joinTimeStr" />
+			<column site="G" name="移动电话" type="string" table_column="phone1" />
+			<column site="H" name="电子邮箱" type="string" table_column="email" />
+			<column site="I" name="是否参加团干培训" type="string" table_column="isTrianing" />
+			<column site="J" name="培训时间" type="string" table_column="trianingTimeStr" />
+			<column site="K" name="是否入党推优" type="string" table_column="isRecommoned" />
+			<column site="L" name="推优时间" type="string" table_column="recommonedTimeStr" />
+			<column site="M" name="团内荣誉" type="string" table_column="isHaveHonor" />
+		</export>
+		<!-- 团员管理信息导出 end -->
+		<!-- 就业协议书补办统计按学院导出start -->
+		<export id="exportAgreementByCollege" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="就业学年" type="string" table_column="employmentYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="待审核" type="string" table_column="pending" />
+			<column site="D" name="已通过" type="string" table_column="pass" />
+			<column site="E" name="已拒绝" type="string" table_column="refuse" />
+			<column site="F" name="总人数" type="string" table_column="total" />
+			<column site="G" name="补办率" type="string" table_column="percentage" />
+		</export>
+		<!-- 就业协议书补办统计按学院导出end -->
+		<!-- 就业协议书补办统计按专业导出start -->
+		<export id="exportAgreementByMajor" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="就业学年" type="string" table_column="employmentYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="待审核" type="string" table_column="pending" />
+			<column site="E" name="已通过" type="string" table_column="pass" />
+			<column site="F" name="已拒绝" type="string" table_column="refuse" />
+			<column site="G" name="总人数" type="string" table_column="total" />
+			<column site="H" name="补办率" type="string" table_column="percentage" />
+		</export>
+		<!-- 就业协议书补办统计按专业导出end -->
+		<!-- 就业协议书补办统计按班级导出start -->
+		<export id="exportAgreementByClass" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="就业学年" type="string" table_column="employmentYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="班级" type="string" table_column="class" />
+			<column site="E" name="待审核" type="string" table_column="pending" />
+			<column site="F" name="已通过" type="string" table_column="pass" />
+			<column site="G" name="已拒绝" type="string" table_column="refuse" />
+			<column site="H" name="总人数" type="string" table_column="total" />
+			<column site="I" name="补办率" type="string" table_column="percentage" />
+		</export>
+		<!-- 就业协议书补办统计按班级导出end -->
+		<!-- 报到证补办统计按学院导出start -->
+		<export id="exportRegisterByCollege" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="就业学年" type="string" table_column="employmentYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="待审核" type="string" table_column="pending" />
+			<column site="D" name="已通过" type="string" table_column="pass" />
+			<column site="E" name="已拒绝" type="string" table_column="refuse" />
+			<column site="F" name="总人数" type="string" table_column="total" />
+			<column site="G" name="补办率" type="string" table_column="percentage" />
+		</export>
+		<!-- 报到证补办统计按学院导出end -->
+		<!-- 报到证补办统计按专业导出start -->
+		<export id="exportRegisterByMajor" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="就业学年" type="string" table_column="employmentYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="待审核" type="string" table_column="pending" />
+			<column site="E" name="已通过" type="string" table_column="pass" />
+			<column site="F" name="已拒绝" type="string" table_column="refuse" />
+			<column site="G" name="总人数" type="string" table_column="total" />
+			<column site="H" name="补办率" type="string" table_column="percentage" />
+		</export>
+		<!-- 报到证补办统计按专业导出end -->
+		<!-- 报到证补办统计按班级导出start -->
+		<export id="exportRegisterByClass" sheet="0" beginRow="1"
+			rowCount="1000">
+			<column site="A" name="就业学年" type="string" table_column="employmentYear" />
+			<column site="B" name="学院" type="string" table_column="college" />
+			<column site="C" name="专业" type="string" table_column="major" />
+			<column site="D" name="班级" type="string" table_column="class" />
+			<column site="E" name="待审核" type="string" table_column="pending" />
+			<column site="F" name="已通过" type="string" table_column="pass" />
+			<column site="G" name="已拒绝" type="string" table_column="refuse" />
+			<column site="H" name="总人数" type="string" table_column="total" />
+			<column site="I" name="补办率" type="string" table_column="percentage" />
+		</export>
+		<!-- 报到证补办统计按班级导出end -->
+		<!-- 企业信息维护start -->
+		<export id="exportCompanyInfo" sheet="0" beginRow="1" rowCount="1000">
+			<column site="A" name="序号" type="string" table_column="index" />
+			<column site="B" name="所属学院" type="string" table_column="collegeText" />
+			<column site="C" name="企业名称" type="string" table_column="companyName" />
+			<column site="D" name="企业性质" type="string" table_column="companyProertyText" />
+			<column site="E" name="企业详细地址" type="string" table_column="address" />
+			<column site="F" name="联系人" type="string" table_column="contactPerson" />
+			<column site="G" name="职务" type="string" table_column="contactPost" />
+			<column site="H" name="联系电话" type="string" table_column="contactPhone" />
+			<column site="I" name="手机号码" type="string" table_column="phoneNum" />
+			<column site="J" name="需求岗位" type="string" table_column="needWork" />
+			<column site="K" name="是否签订校企合作协议" type="string"
+				table_column="isSchoolCompanyProtocolText" />
+			<column site="L" name="是否批量就业单位" type="string" table_column="isBatchWorkText" />
+			<column site="M" name="更新时间" type="string" table_column="updateDateText" />
+		</export>
+		<!-- 企业信息维护end -->
+		<!-- 就业率统计 按学院start -->
+		<export id="exportStatJobCollege" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="院系名称" type="string" table_column="collegeName" />
+			<column site="B" name="总毕业生人数" type="string" table_column="totalStuNum" />
+			<column site="C" name="总就业人数" type="string" table_column="totalJobNum" />
+			<column site="D" name="总就业率" type="string" table_column="jobRate" />
+			<column site="E" name="签就业协议" type="string" table_column="protocoCareerNum" />
+			<column site="F" name="签劳动合同" type="string" table_column="laborCareerNum" />
+			<column site="G" name="其他录用" type="string" table_column="otherCareerNum" />
+			<column site="H" name="科研助理" type="string" table_column="researchAssistantNum" />
+			<column site="I" name="应征义务兵" type="string" table_column="applyConscriptsNum" />
+			<column site="J" name="国家基层项目" type="string" table_column="nationalBasicProjectNum" />
+			<column site="K" name="地方基层项目" type="string" table_column="localBasicProjectNum" />
+			<column site="L" name="自主创业" type="string" table_column="selfEmployedNum" />
+			<column site="M" name="自由职业" type="string" table_column="freelanderNum" />
+			<column site="N" name="升学" type="string" table_column="goHigherSchoolNum" />
+			<column site="O" name="出国出境" type="string" table_column="goAbroadNum" />
+		</export>
+		<export id="exportStatJobCollegeCond" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="院系名称" type="string" table_column="collegeName" />
+			<column site="B" name="学年" type="string" table_column="schoolYear" />
+			<column site="C" name="总毕业生人数" type="string" table_column="totalStuNum" />
+			<column site="D" name="总就业人数" type="string" table_column="totalJobNum" />
+			<column site="E" name="总就业率" type="string" table_column="jobRate" />
+			<column site="F" name="签就业协议" type="string" table_column="protocoCareerNum" />
+			<column site="G" name="签劳动合同" type="string" table_column="laborCareerNum" />
+			<column site="H" name="其他录用" type="string" table_column="otherCareerNum" />
+			<column site="I" name="科研助理" type="string" table_column="researchAssistantNum" />
+			<column site="J" name="应征义务兵" type="string" table_column="applyConscriptsNum" />
+			<column site="K" name="国家基层项目" type="string" table_column="nationalBasicProjectNum" />
+			<column site="L" name="地方基层项目" type="string" table_column="localBasicProjectNum" />
+			<column site="M" name="自主创业" type="string" table_column="selfEmployedNum" />
+			<column site="N" name="自由职业" type="string" table_column="freelanderNum" />
+			<column site="O" name="升学" type="string" table_column="goHigherSchoolNum" />
+			<column site="P" name="出国出境" type="string" table_column="goAbroadNum" />
+		</export>
+		<!-- 就业率统计 按学院end -->
+		<!-- 就业率统计 按专业start -->
+		<export id="exportStatJobMajor" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="院系名称" type="string" table_column="collegeName" />
+			<column site="B" name="学校专业" type="string" table_column="majorName" />
+			<column site="C" name="总毕业生人数" type="string" table_column="totalStuNum" />
+			<column site="D" name="总就业人数" type="string" table_column="totalJobNum" />
+			<column site="E" name="总就业率" type="string" table_column="jobRate" />
+			<column site="F" name="签就业协议" type="string" table_column="protocoCareerNum" />
+			<column site="G" name="签劳动合同" type="string" table_column="laborCareerNum" />
+			<column site="H" name="其他录用" type="string" table_column="otherCareerNum" />
+			<column site="I" name="科研助理" type="string" table_column="researchAssistantNum" />
+			<column site="J" name="应征义务兵" type="string" table_column="applyConscriptsNum" />
+			<column site="K" name="国家基层项目" type="string" table_column="nationalBasicProjectNum" />
+			<column site="L" name="地方基层项目" type="string" table_column="localBasicProjectNum" />
+			<column site="M" name="自主创业" type="string" table_column="selfEmployedNum" />
+			<column site="N" name="自由职业" type="string" table_column="freelanderNum" />
+			<column site="O" name="升学" type="string" table_column="goHigherSchoolNum" />
+			<column site="P" name="出国出境" type="string" table_column="goAbroadNum" />
+		</export>
+		<export id="exportStatJobMajorCond" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="院系名称" type="string" table_column="collegeName" />
+			<column site="B" name="学校专业" type="string" table_column="majorName" />
+			<column site="C" name="学年" type="string" table_column="schoolYear" />
+			<column site="D" name="总毕业生人数" type="string" table_column="totalStuNum" />
+			<column site="E" name="总就业人数" type="string" table_column="totalJobNum" />
+			<column site="F" name="总就业率" type="string" table_column="jobRate" />
+			<column site="G" name="签就业协议" type="string" table_column="protocoCareerNum" />
+			<column site="H" name="签劳动合同" type="string" table_column="laborCareerNum" />
+			<column site="I" name="其他录用" type="string" table_column="otherCareerNum" />
+			<column site="J" name="科研助理" type="string" table_column="researchAssistantNum" />
+			<column site="K" name="应征义务兵" type="string" table_column="applyConscriptsNum" />
+			<column site="L" name="国家基层项目" type="string" table_column="nationalBasicProjectNum" />
+			<column site="M" name="地方基层项目" type="string" table_column="localBasicProjectNum" />
+			<column site="N" name="自主创业" type="string" table_column="selfEmployedNum" />
+			<column site="O" name="自由职业" type="string" table_column="freelanderNum" />
+			<column site="P" name="升学" type="string" table_column="goHigherSchoolNum" />
+			<column site="Q" name="出国出境" type="string" table_column="goAbroadNum" />
+		</export>
+		<!-- 就业率统计 按专业end -->
+		<!-- 就业率统计 按班级start -->
+		<export id="exportStatJobClass" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="院系名称" type="string" table_column="collegeName" />
+			<column site="B" name="学校专业" type="string" table_column="majorName" />
+			<column site="C" name="班级" type="string" table_column="className" />
+			<column site="D" name="总毕业生人数" type="string" table_column="totalStuNum" />
+			<column site="E" name="总就业人数" type="string" table_column="totalJobNum" />
+			<column site="F" name="总就业率" type="string" table_column="jobRate" />
+			<column site="G" name="签就业协议" type="string" table_column="protocoCareerNum" />
+			<column site="H" name="签劳动合同" type="string" table_column="laborCareerNum" />
+			<column site="I" name="其他录用" type="string" table_column="otherCareerNum" />
+			<column site="J" name="科研助理" type="string" table_column="researchAssistantNum" />
+			<column site="K" name="应征义务兵" type="string" table_column="applyConscriptsNum" />
+			<column site="L" name="国家基层项目" type="string" table_column="nationalBasicProjectNum" />
+			<column site="M" name="地方基层项目" type="string" table_column="localBasicProjectNum" />
+			<column site="N" name="自主创业" type="string" table_column="selfEmployedNum" />
+			<column site="O" name="自由职业" type="string" table_column="freelanderNum" />
+			<column site="P" name="升学" type="string" table_column="goHigherSchoolNum" />
+			<column site="Q" name="出国出境" type="string" table_column="goAbroadNum" />
+		</export>
+		<export id="exportStatJobClassCond" sheet="0" beginRow="1"
+			rowCount="10000">
+			<column site="A" name="院系名称" type="string" table_column="collegeName" />
+			<column site="B" name="学校专业" type="string" table_column="majorName" />
+			<column site="C" name="班级" type="string" table_column="className" />
+			<column site="D" name="学年" type="string" table_column="schoolYear" />
+			<column site="E" name="总毕业生人数" type="string" table_column="totalStuNum" />
+			<column site="F" name="总就业人数" type="string" table_column="totalJobNum" />
+			<column site="G" name="总就业率" type="string" table_column="jobRate" />
+			<column site="H" name="签就业协议" type="string" table_column="protocoCareerNum" />
+			<column site="I" name="签劳动合同" type="string" table_column="laborCareerNum" />
+			<column site="J" name="其他录用" type="string" table_column="otherCareerNum" />
+			<column site="K" name="科研助理" type="string" table_column="researchAssistantNum" />
+			<column site="L" name="应征义务兵" type="string" table_column="applyConscriptsNum" />
+			<column site="M" name="国家基层项目" type="string" table_column="nationalBasicProjectNum" />
+			<column site="N" name="地方基层项目" type="string" table_column="localBasicProjectNum" />
+			<column site="O" name="自主创业" type="string" table_column="selfEmployedNum" />
+			<column site="P" name="自由职业" type="string" table_column="freelanderNum" />
+			<column site="Q" name="升学" type="string" table_column="goHigherSchoolNum" />
+			<column site="R" name="出国出境" type="string" table_column="goAbroadNum" />
+		</export>
+		<!-- 就业率统计 按班级end -->
+
+		<!-- 离校统计导出start(学院) -->
+		<export id="exportCollegeLeave" sheet="0" beginRow="2"
+			rowCount="1000">
+			<column site="A" name="办理年份" type="string" table_column="year" />
+			<column site="B" name="学院" type="string" table_column="name" />
+			<column site="C" name="毕业人数" type="string" table_column="sumNum" />
+			<column site="D" name="已办人数" type="string" table_column="sumHandle" />
+			<column site="E" name="办理率" type="string" table_column="rate" />
+		</export>
+		<!-- 离校统计导出end(学院) -->
+
+		<!-- 离校统计导出start(专业) -->
+		<export id="exportMajorLeave" sheet="0" beginRow="2" rowCount="1000">
+			<column site="A" name="办理年份" type="string" table_column="year" />
+			<column site="B" name="专业" type="string" table_column="name" />
+			<column site="C" name="毕业人数" type="string" table_column="sumNum" />
+			<column site="D" name="已办人数" type="string" table_column="sumHandle" />
+			<column site="E" name="办理率" type="string" table_column="rate" />
+		</export>
+		<!-- 离校统计导出end(专业) -->
+
+		<!-- 离校统计导出start(班级) -->
+		<export id="exportClassLeave" sheet="0" beginRow="2" rowCount="1000">
+			<column site="A" name="办理年份" type="string" table_column="year" />
+			<column site="B" name="班级" type="string" table_column="name" />
+			<column site="C" name="毕业人数" type="string" table_column="sumNum" />
+			<column site="D" name="已办人数" type="string" table_column="sumHandle" />
+			<column site="E" name="办理率" type="string" table_column="rate" />
+		</export>
+		<!-- 离校统计导出end(班级) -->
+
+		<!-- 离校项目统计导出start(学院) -->
+		<export id="exportCollegeLeaveProject" sheet="0" beginRow="2"
+			rowCount="1000">
+			<column site="A" name="办理年份" type="string" table_column="year" />
+			<column site="B" name="学院" type="string" table_column="name" />
+			<column site="C" name="毕业人数" type="string" table_column="sumNum" />
+			<column site="D" name="公寓管理中心已办人数" type="string" table_column="dormSum" />
+			<column site="E" name="公寓管理中心办理率" type="string" table_column="dormRate" />
+			<column site="F" name="图书信息中心已办人数" type="string" table_column="librarySum" />
+			<column site="G" name="图书信息中心办理率" type="string" table_column="libraryRate" />
+			<column site="H" name="计财处已办人数" type="string" table_column="financeSum" />
+			<column site="I" name="计财处办理率" type="string" table_column="financeRate" />
+			<column site="J" name="一卡通已办人数" type="string" table_column="oneCardSum" />
+			<column site="K" name="一卡通办理率" type="string" table_column="oneCardRate" />
+			<column site="L" name="组织部已办人数" type="string" table_column="caucusSum" />
+			<column site="M" name="组织部办理率" type="string" table_column="caucusRate" />
+			<column site="N" name="保卫处已办人数" type="string" table_column="securitySum" />
+			<column site="O" name="保卫处办理率" type="string" table_column="securityRate" />
+			<column site="P" name="二级学院已办人数" type="string" table_column="collegeSum" />
+			<column site="Q" name="二级学院办理率" type="string" table_column="collegeRate" />
+		</export>
+		<!-- 离校项目统计导出end(学院) -->
+
+		<!-- 离校项目统计导出start(专业) -->
+		<export id="exportMajorLeaveProject" sheet="0" beginRow="3"
+			rowCount="1000">
+			<column site="A" name="办理年份" type="string" table_column="year" />
+			<column site="B" name="专业" type="string" table_column="name" />
+			<column site="C" name="毕业人数" type="string" table_column="sumNum" />
+			<column site="D" name="公寓管理中心已办人数" type="string" table_column="dormSum" />
+			<column site="E" name="公寓管理中心办理率" type="string" table_column="dormRate" />
+			<column site="F" name="图书信息中心已办人数" type="string" table_column="librarySum" />
+			<column site="G" name="图书信息中心办理率" type="string" table_column="libraryRate" />
+			<column site="H" name="计财处已办人数" type="string" table_column="financeSum" />
+			<column site="I" name="计财处办理率" type="string" table_column="financeRate" />
+			<column site="J" name="一卡通已办人数" type="string" table_column="oneCardSum" />
+			<column site="K" name="一卡通办理率" type="string" table_column="oneCardRate" />
+			<column site="L" name="组织部已办人数" type="string" table_column="caucusSum" />
+			<column site="M" name="组织部办理率" type="string" table_column="caucusRate" />
+			<column site="N" name="保卫处已办人数" type="string" table_column="securitySum" />
+			<column site="O" name="保卫处办理率" type="string" table_column="securityRate" />
+			<column site="P" name="二级学院已办人数" type="string" table_column="collegeSum" />
+			<column site="Q" name="二级学院办理率" type="string" table_column="collegeRate" />
+		</export>
+		<!-- 离校项目统计导出end(专业) -->
+
+		<!-- 离校项目统计导出start(班级) -->
+		<export id="exportClassLeaveProject" sheet="0" beginRow="2"
+			rowCount="1000">
+			<column site="A" name="办理年份" type="string" table_column="year" />
+			<column site="B" name="班级" type="string" table_column="name" />
+			<column site="C" name="毕业人数" type="string" table_column="sumNum" />
+			<column site="D" name="公寓管理中心已办人数" type="string" table_column="dormSum" />
+			<column site="E" name="公寓管理中心办理率" type="string" table_column="dormRate" />
+			<column site="F" name="图书信息中心已办人数" type="string" table_column="librarySum" />
+			<column site="G" name="图书信息中心办理率" type="string" table_column="libraryRate" />
+			<column site="H" name="计财处已办人数" type="string" table_column="financeSum" />
+			<column site="I" name="计财处办理率" type="string" table_column="financeRate" />
+			<column site="J" name="一卡通已办人数" type="string" table_column="oneCardSum" />
+			<column site="K" name="一卡通办理率" type="string" table_column="oneCardRate" />
+			<column site="L" name="组织部已办人数" type="string" table_column="caucusSum" />
+			<column site="M" name="组织部办理率" type="string" table_column="caucusRate" />
+			<column site="N" name="保卫处已办人数" type="string" table_column="securitySum" />
+			<column site="O" name="保卫处办理率" type="string" table_column="securityRate" />
+			<column site="P" name="二级学院已办人数" type="string" table_column="collegeSum" />
+			<column site="Q" name="二级学院办理率" type="string" table_column="collegeRate" />
+		</export>
+		<!-- 离校项目统计导出end(班级) -->
+	</exports>
+</excels> 

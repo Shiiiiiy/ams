@@ -1,0 +1,42 @@
+@charset "utf-8";
+/* CSS Document */
+/*全局控制*/
+body{margin:0; padding:0; font-family:"微软雅黑";
+
+ /*delete by wangcl 20150729
+font-size:16px; */
+}
+
+/*清除浏览器默认样式*/
+ul,li,table,tr,th,td,img,a,p,select,span,h1,h2,h3,h4,h5,h6,dl,dt,dd,input,option,textarea{margin:0; padding:0; list-style:none; outline:none; border:0;}
+
+
+/*填写说明*/
+.wrapper{margin:0 1%;}
+.tit_ins{color:#2c2c2c; font-size:30px; height:55px; line-height:55px; text-align:center; font-weight:bold; border-bottom:1px dashed #dcdddd; position:relative; font-family:"微软雅黑";}
+.btn{width:85px; height:30px; line-height:30px; color:#fff; background:#1399bb; border-radius:3px;}
+.ps1{position:absolute; left:0px; bottom:10px;}
+.ps2{margin:30px auto 0; width:200px;}
+.text_ins{overflow:hidden; margin:15px auto 0;}
+.text_ins .tx{height:35px; line-height:35px; color:#2c2c2c; font-weight:bold;}
+.text_ins textarea{height:270px; line-height:22px; border:1px solid #e2e4e4;  border-radius:5px; width:99.9%;}
+
+
+
+/*填报说明*/
+.wid{width:980px;}
+.infoL,.infoR{padding:2px 10px;}
+.infoL{float:left;}
+.infoR{float:right;}
+.info{height:40px; line-height:40px;}
+.q1{margin-right:10px; width:110px; display:inline-block; font-size:14px; color:#2c2c2c; font-weight:bold;}
+.xb{width:50px; margin-left:5px;}
+.inp1,.inp2{border:1px solid #e2e4e4; background:#f6fdff; border-radius:3px; height:28px; line-height:28px;}
+.inp1{min-width:160px; max-width:330px;}
+.inp2{min-width:300px; max-width:330px;}
+
+.select1{border:1px solid #e2e4e4; background:#f6fdff; border-radius:3px; height:28px; line-height:28px;width:213px;}
+.textarea1{border:1px solid #e2e4e4; background:#f6fdff; border-radius:3px; height:50px; width:50px;}
+
+.f_l{float:left;}
+.f_r{float:right;}
